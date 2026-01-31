@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1"/>
-<title>Breast Pathology Quick Reference: Excision vs Observation</title>
+<title>Breast RadPath Quick Reference: Excision vs Observation</title>
 <style>
   :root{
     --bg:#0b1020;
@@ -41,7 +41,7 @@
   }
   .wrap{max-width:1200px; margin:0 auto; padding:16px 18px}
   .topbar{
-    display:flex; gap:14px; align-items:center; justify-content:space-between;
+    display:flex; gap:14px; align-items:center; justify-content:space-between; flex-wrap:wrap;
   }
   .brand{display:flex; gap:12px; align-items:center}
   .logo{
@@ -208,6 +208,41 @@
     nav{position:relative; top:0}
     .search{min-width:220px}
   }
+
+  /* ===== Site-wide navigation (top) ===== */
+  .siteNav{
+    display:flex; gap:8px; align-items:center; flex-wrap:wrap;
+    margin-left:8px;
+  }
+  .siteNav a{
+    display:inline-flex; align-items:center; gap:6px;
+    padding:8px 10px;
+    border-radius:999px;
+    border:1px solid var(--border);
+    background:rgba(15,23,48,.6);
+    color:var(--muted);
+    font-size:12px;
+    text-decoration:none;
+    user-select:none;
+    white-space:nowrap;
+  }
+  .siteNav a:hover{
+    background:rgba(122,162,255,.12);
+    border-color:rgba(122,162,255,.25);
+    color:var(--text);
+    text-decoration:none;
+  }
+  .siteNav a.active{
+    background:rgba(69,212,131,.14);
+    border-color:rgba(69,212,131,.35);
+    color:var(--text);
+  }
+  .siteNav .dot{
+    width:6px; height:6px; border-radius:99px; display:inline-block;
+    background:rgba(69,212,131,.9);
+    box-shadow:0 0 0 3px rgba(69,212,131,.12);
+  }
+
 </style>
 </head>
 <body>
@@ -216,9 +251,15 @@
     <div class="brand">
       <div class="logo" aria-hidden="true"></div>
       <div class="title">
-        <h1>Breast Pathology Quick Reference</h1>
-        <p>Core biopsy pathology: excision vs observation • for breast radiologists</p>
+        <h1>Breast RadPath Quick Reference</h1>
+        <p>Radiology–pathology correlation: excision vs observation • for breast radiologists</p>
       </div>
+    </div>
+
+    <div class="siteNav" aria-label="Site navigation">
+      <a href="index.html" title="Home"><span class="dot" aria-hidden="true"></span>Home</a>
+      <a href="breast-pathology-excision-reference.html" class="active" title="Current page">Pathology: Excision vs Observation</a>
+      <a href="#references" title="Jump to bibliography">References</a>
     </div>
     <div class="controls">
       <div class="search">
