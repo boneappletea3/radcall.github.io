@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1"/>
-<title>Breast RadPath Quick Reference: Excision vs Observation</title>
+<title>Breast Pathology Quick Reference: Excision vs Observation</title>
 <style>
   :root{
     --bg:#0b1020;
@@ -32,7 +32,26 @@
     line-height:1.45;
   }
   a{color:var(--accent); text-decoration:none}
-  a:hover{text-decoration:underline}
+  
+a:hover{text-decoration:underline}
+
+/* ===== Breadcrumbs (site-wide) ===== */
+.breadcrumbs{
+  display:flex; gap:10px; align-items:center; flex-wrap:wrap;
+  margin-left:8px;
+  padding:8px 12px;
+  border-radius:999px;
+  border:1px solid var(--border);
+  background:rgba(15,23,48,.55);
+  color:var(--muted);
+  font-size:12px;
+  white-space:nowrap;
+}
+.breadcrumbs a{color:var(--accent); text-decoration:none}
+.breadcrumbs a:hover{text-decoration:underline}
+.breadcrumbs .sep{opacity:.65}
+.breadcrumbs .current{color:var(--text); font-weight:600}
+
   header{
     position:sticky; top:0; z-index:50;
     background:rgba(11,16,32,.82);
@@ -41,7 +60,7 @@
   }
   .wrap{max-width:1200px; margin:0 auto; padding:16px 18px}
   .topbar{
-    display:flex; gap:14px; align-items:center; justify-content:space-between; flex-wrap:wrap;
+    display:flex; gap:14px; align-items:center; justify-content:space-between;
   }
   .brand{display:flex; gap:12px; align-items:center}
   .logo{
@@ -167,9 +186,6 @@
   summary .sleft b{font-size:13px}
   summary .sleft span{font-size:12px; color:var(--muted)}
   .detailbody{padding:12px 14px; font-size:13px; color:var(--text)}
-  .refsDetails{margin-top:4px}
-  .refsDetails summary{background:rgba(18,28,58,.35)}
-
   ul.clean{margin:8px 0 0 18px}
   .refs{
     display:grid; gap:10px;
@@ -211,41 +227,6 @@
     nav{position:relative; top:0}
     .search{min-width:220px}
   }
-
-  /* ===== Site-wide navigation (top) ===== */
-  .siteNav{
-    display:flex; gap:8px; align-items:center; flex-wrap:wrap;
-    margin-left:8px;
-  }
-  .siteNav a{
-    display:inline-flex; align-items:center; gap:6px;
-    padding:8px 10px;
-    border-radius:999px;
-    border:1px solid var(--border);
-    background:rgba(15,23,48,.6);
-    color:var(--muted);
-    font-size:12px;
-    text-decoration:none;
-    user-select:none;
-    white-space:nowrap;
-  }
-  .siteNav a:hover{
-    background:rgba(122,162,255,.12);
-    border-color:rgba(122,162,255,.25);
-    color:var(--text);
-    text-decoration:none;
-  }
-  .siteNav a.active{
-    background:rgba(69,212,131,.14);
-    border-color:rgba(69,212,131,.35);
-    color:var(--text);
-  }
-  .siteNav .dot{
-    width:6px; height:6px; border-radius:99px; display:inline-block;
-    background:rgba(69,212,131,.9);
-    box-shadow:0 0 0 3px rgba(69,212,131,.12);
-  }
-
 </style>
 </head>
 <body>
@@ -254,15 +235,9 @@
     <div class="brand">
       <div class="logo" aria-hidden="true"></div>
       <div class="title">
-        <h1>Breast RadPath Quick Reference</h1>
-        <p>Radiology–pathology correlation: excision vs observation • for breast radiologists</p>
+        <h1>Breast Pathology Quick Reference</h1>
+        <p>Core biopsy pathology: excision vs observation • for breast radiologists</p>
       </div>
-    </div>
-
-    <div class="siteNav" aria-label="Site navigation">
-      <a href="index.html" title="Home"><span class="dot" aria-hidden="true"></span>Home</a>
-      <a href="breast-pathology-excision-reference.html" class="active" title="Current page">RadPath</a>
-      <a href="#references" title="Jump to bibliography">References</a>
     </div>
     <div class="controls">
       <div class="search">
@@ -282,6 +257,17 @@
     </div>
   </div>
 </header>
+
+<div class="wrap" style="padding-top:8px">
+  <nav aria-label="Breadcrumb" class="breadcrumb">
+    <a href="index.html">Home</a>
+    <span class="sep">›</span>
+    <a href="breast-pathology-excision-reference.html">RadPath</a>
+    <span class="sep">›</span>
+    <span aria-current="page">Excision vs Observation</span>
+  </nav>
+</div>
+
 
 <main class="wrap">
   <nav aria-label="Page navigation">
@@ -745,19 +731,8 @@
         <span class="pill">Bibliography</span>
       </div>
       <div class="body">
-        <details class="refsDetails">
-          <summary>
-            <div class="sleft">
-              <b>Show references</b>
-              <span>Click to expand/collapse the bibliography</span>
-            </div>
-            <span class="pill">Toggle</span>
-          </summary>
-          <div class="detailbody">
-            <div class="refs" id="refList"></div>
-          </div>
-        </details>
-    </div>
+        <div class="refs" id="refList"></div>
+      </div>
     </article>
 
     <div class="footer">
@@ -886,36 +861,6 @@
       if(navMap[id]) setActiveChip(navMap[id]);
     });
   });
-
-
-  // Auto-open bibliography when navigating via hash (#references or #ref-N)
-  function openRefsIfNeeded(){
-    const h = (location.hash || "").toLowerCase();
-    const refsDetails = document.querySelector(".refsDetails");
-    if(!refsDetails) return;
-    if(h === "#references" || h.startsWith("#ref-")){
-      refsDetails.open = true;
-    }
-  }
-  window.addEventListener("hashchange", openRefsIfNeeded);
-
-  // Ensure click-to-citation opens bibliography before scrolling
-  document.addEventListener("click", (e)=>{
-    const a = e.target && e.target.closest ? e.target.closest('a[href^="#ref-"], a[href="#references"]') : null;
-    if(!a) return;
-    const refsDetails = document.querySelector(".refsDetails");
-    if(refsDetails) refsDetails.open = true;
-    // allow default hash navigation, then nudge scroll after layout
-    setTimeout(()=>{
-      const targetId = (a.getAttribute("href") || "").replace("#","");
-      const el = document.getElementById(targetId);
-      if(el) el.scrollIntoView({block:"start", behavior:"smooth"});
-    }, 50);
-  });
-
-  // Initial check on load
-  openRefsIfNeeded();
-
 
   // Initial pass
   applyFilters();
