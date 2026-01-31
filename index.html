@@ -1,0 +1,215 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Breast Imaging Clinical Reference</title>
+
+<style>
+/* ===== THEME (shared) ===== */
+:root{
+  --bg:#0b1020;
+  --panel:#0f1730;
+  --panel2:#121c3a;
+  --text:#eaf0ff;
+  --muted:#b7c2e6;
+  --accent:#7aa2ff;
+  --accent2:#45d483;
+  --border:rgba(255,255,255,.12);
+  --shadow:0 10px 30px rgba(0,0,0,.35);
+  --radius:16px;
+  --sans: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+}
+*{box-sizing:border-box}
+body{
+  margin:0;
+  font-family:var(--sans);
+  background:
+    radial-gradient(1200px 800px at 20% 10%, rgba(122,162,255,.25), transparent 60%),
+    radial-gradient(900px 700px at 80% 30%, rgba(69,212,131,.15), transparent 60%),
+    var(--bg);
+  color:var(--text);
+}
+a{color:var(--accent); text-decoration:none}
+a:hover{text-decoration:underline}
+
+/* ===== LAYOUT ===== */
+header{
+  position:sticky; top:0;
+  background:rgba(11,16,32,.85);
+  backdrop-filter:blur(10px);
+  border-bottom:1px solid var(--border);
+}
+.wrap{max-width:1200px; margin:0 auto; padding:18px}
+
+.brand{
+  display:flex; gap:14px; align-items:center;
+}
+.logo{
+  width:46px; height:46px; border-radius:14px;
+  background:linear-gradient(135deg, rgba(122,162,255,.9), rgba(69,212,131,.8));
+  box-shadow:var(--shadow);
+}
+.title h1{margin:0; font-size:18px}
+.title p{margin:4px 0 0; font-size:13px; color:var(--muted)}
+
+.hero{
+  padding:64px 18px 48px;
+}
+.hero h2{
+  font-size:32px;
+  margin:0 0 12px;
+}
+.hero p{
+  max-width:760px;
+  font-size:16px;
+  color:var(--muted);
+}
+
+.grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit, minmax(260px,1fr));
+  gap:18px;
+  margin-top:36px;
+}
+
+/* ===== CARDS ===== */
+.card{
+  border:1px solid var(--border);
+  border-radius:var(--radius);
+  background:rgba(15,23,48,.55);
+  box-shadow:var(--shadow);
+  padding:20px;
+  display:flex;
+  flex-direction:column;
+  justify-content:space-between;
+}
+.card h3{margin:0 0 8px}
+.card p{margin:0; font-size:14px; color:var(--muted)}
+.card .meta{
+  margin-top:14px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  font-size:13px;
+}
+.badge{
+  padding:6px 10px;
+  border-radius:999px;
+  border:1px solid var(--border);
+  background:rgba(122,162,255,.15);
+}
+.card:hover{
+  border-color:rgba(122,162,255,.5);
+  transform:translateY(-2px);
+  transition:.15s ease;
+}
+
+/* ===== FOOTER ===== */
+footer{
+  margin-top:64px;
+  padding:32px 18px;
+  border-top:1px solid var(--border);
+  color:var(--muted);
+  font-size:12px;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <div class="wrap brand">
+    <div class="logo"></div>
+    <div class="title">
+      <h1>Breast Imaging Clinical Reference</h1>
+      <p>Evidence-based guidance for breast radiologists</p>
+    </div>
+  </div>
+</header>
+
+<main>
+
+<section class="hero wrap">
+  <h2>Focused, practical guidance for daily breast imaging practice</h2>
+  <p>
+    This site is a living reference designed for breast radiologists, fellows,
+    and trainees. Content emphasizes radiology–pathology concordance,
+    risk‑stratified management, and guideline‑supported decision making.
+    Each page is fully cited and optimized for fast clinical lookup.
+  </p>
+
+  <div class="grid">
+
+    <a href="breast-pathology-excision-reference.html" class="card">
+      <div>
+        <h3>Breast Pathology: Excision vs Observation</h3>
+        <p>
+          Comprehensive management of high‑risk and borderline lesions after
+          core needle biopsy, including ADH, FEA, papillomas, radial scars,
+          lobular neoplasia, and fibroepithelial lesions.
+        </p>
+      </div>
+      <div class="meta">
+        <span class="badge">Live</span>
+        <span>RadPath</span>
+      </div>
+    </a>
+
+    <div class="card" style="opacity:.55">
+      <div>
+        <h3>High‑Risk Screening & MRI</h3>
+        <p>
+          MRI indications, enhancement patterns, BI‑RADS pitfalls,
+          and post‑biopsy MRI decision making.
+        </p>
+      </div>
+      <div class="meta">
+        <span class="badge">Coming soon</span>
+        <span>MRI</span>
+      </div>
+    </div>
+
+    <div class="card" style="opacity:.55">
+      <div>
+        <h3>Screening Guidelines & Follow‑Up</h3>
+        <p>
+          Mammography, ultrasound, and MRI screening recommendations,
+          surveillance intervals, and audit pearls.
+        </p>
+      </div>
+      <div class="meta">
+        <span class="badge">Coming soon</span>
+        <span>Screening</span>
+      </div>
+    </div>
+
+    <div class="card" style="opacity:.55">
+      <div>
+        <h3>Concordance & QA Documentation</h3>
+        <p>
+          Practical language and workflows for radiology–pathology concordance,
+          MDT conferences, and quality assurance.
+        </p>
+      </div>
+      <div class="meta">
+        <span class="badge">Planned</span>
+        <span>Quality</span>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    Built as a lightweight GitHub Pages site for fast access in clinic.
+    Content is educational and intended to complement—not replace—
+    institutional policy and multidisciplinary discussion.
+  </div>
+</footer>
+
+</body>
+</html>
