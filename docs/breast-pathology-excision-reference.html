@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1"/>
-<title>Breast RadPath Quick Reference: Excision vs Observation</title>
+<title>Breast RadPath Quick Reference</title>
 <style>
   :root{
     --bg:#0b1020;
@@ -167,6 +167,9 @@
   summary .sleft b{font-size:13px}
   summary .sleft span{font-size:12px; color:var(--muted)}
   .detailbody{padding:12px 14px; font-size:13px; color:var(--text)}
+  .refsDetails{margin-top:4px}
+  .refsDetails summary{background:rgba(18,28,58,.35)}
+
   ul.clean{margin:8px 0 0 18px}
   .refs{
     display:grid; gap:10px;
@@ -742,8 +745,19 @@
         <span class="pill">Bibliography</span>
       </div>
       <div class="body">
-        <div class="refs" id="refList"></div>
-      </div>
+        <details class="refsDetails">
+          <summary>
+            <div class="sleft">
+              <b>Show references</b>
+              <span>Click to expand/collapse the bibliography</span>
+            </div>
+            <span class="pill">Toggle</span>
+          </summary>
+          <div class="detailbody">
+            <div class="refs" id="refList"></div>
+          </div>
+        </details>
+    </div>
     </article>
 
     <div class="footer">
@@ -872,6 +886,36 @@
       if(navMap[id]) setActiveChip(navMap[id]);
     });
   });
+
+
+  // Auto-open bibliography when navigating via hash (#references or #ref-N)
+  function openRefsIfNeeded(){
+    const h = (location.hash || "").toLowerCase();
+    const refsDetails = document.querySelector(".refsDetails");
+    if(!refsDetails) return;
+    if(h === "#references" || h.startsWith("#ref-")){
+      refsDetails.open = true;
+    }
+  }
+  window.addEventListener("hashchange", openRefsIfNeeded);
+
+  // Ensure click-to-citation opens bibliography before scrolling
+  document.addEventListener("click", (e)=>{
+    const a = e.target && e.target.closest ? e.target.closest('a[href^="#ref-"], a[href="#references"]') : null;
+    if(!a) return;
+    const refsDetails = document.querySelector(".refsDetails");
+    if(refsDetails) refsDetails.open = true;
+    // allow default hash navigation, then nudge scroll after layout
+    setTimeout(()=>{
+      const targetId = (a.getAttribute("href") || "").replace("#","");
+      const el = document.getElementById(targetId);
+      if(el) el.scrollIntoView({block:"start", behavior:"smooth"});
+    }, 50);
+  });
+
+  // Initial check on load
+  openRefsIfNeeded();
+
 
   // Initial pass
   applyFilters();
