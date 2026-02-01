@@ -1,0 +1,292 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Understanding Your Diagnostic Mammogram</title>
+<style>
+  :root{
+    --bg:#0b1020;
+    --panel:#0f1730;
+    --panel2:#121c3a;
+    --text:#eaf0ff;
+    --muted:#b7c2e6;
+    --accent:#7aa2ff;
+    --accent2:#45d483;
+    --border:rgba(255,255,255,.12);
+    --shadow:0 10px 30px rgba(0,0,0,.35);
+    --radius:16px;
+    --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+    --sans: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif;
+  }
+  *{box-sizing:border-box}
+  body{
+    margin:0;
+    font-family:var(--sans);
+    background:radial-gradient(1200px 800px at 20% 10%, rgba(122,162,255,.25), transparent 60%),
+               radial-gradient(900px 700px at 80% 30%, rgba(69,212,131,.15), transparent 60%),
+               var(--bg);
+    color:var(--text);
+    line-height:1.55;
+  }
+  a{color:var(--accent); text-decoration:none}
+  a:hover{text-decoration:underline}
+  header{
+    position:sticky; top:0; z-index:50;
+    background:rgba(11,16,32,.82);
+    backdrop-filter: blur(10px);
+    border-bottom:1px solid var(--border);
+  }
+  .wrap{max-width:1100px; margin:0 auto; padding:16px 18px}
+  .topbar{display:flex; gap:14px; align-items:center; justify-content:space-between;}
+  .brand{display:flex; gap:12px; align-items:center}
+  .logo{
+    width:44px; height:44px; border-radius:14px;
+    background:linear-gradient(135deg, rgba(122,162,255,.9), rgba(69,212,131,.8));
+    box-shadow:var(--shadow);
+  }
+  .title h1{margin:0; font-size:16px; letter-spacing:.2px}
+  .title p{margin:2px 0 0; color:var(--muted); font-size:12px}
+
+  .siteNav{display:flex; gap:8px; align-items:center; flex-wrap:wrap; margin-left:auto}
+  .siteNav a{
+    display:inline-flex; align-items:center; gap:6px;
+    padding:8px 10px;
+    border-radius:999px;
+    border:1px solid var(--border);
+    background:rgba(15,23,48,.6);
+    color:var(--muted);
+    font-size:12px;
+    text-decoration:none;
+    white-space:nowrap
+  }
+  .siteNav a:hover{
+    background:rgba(122,162,255,.12);
+    border-color:rgba(122,162,255,.25);
+    color:var(--text);
+    text-decoration:none
+  }
+  .siteNav a.active{
+    background:rgba(69,212,131,.14);
+    border-color:rgba(69,212,131,.35);
+    color:var(--text)
+  }
+  .siteNav .dot{
+    width:6px; height:6px; border-radius:99px; display:inline-block;
+    background:rgba(69,212,131,.9);
+    box-shadow:0 0 0 3px rgba(69,212,131,.12)
+  }
+
+  .card{
+    border:1px solid var(--border);
+    border-radius:var(--radius);
+    background:rgba(15,23,48,.58);
+    box-shadow:var(--shadow);
+    overflow:hidden;
+  }
+  .card + .card{margin-top:16px}
+  .card .hdr{
+    padding:16px;
+    border-bottom:1px solid var(--border);
+    background:rgba(18,28,58,.55);
+    display:flex; align-items:flex-start; justify-content:space-between; gap:12px;
+  }
+  .card .hdr h2{margin:0; font-size:15px}
+  .card .hdr p{margin:6px 0 0; color:var(--muted); font-size:12px}
+  .card .body{padding:16px; font-size:14px; color:var(--text)}
+  .note{
+    border-left:4px solid rgba(122,162,255,.65);
+    padding:10px 12px;
+    border-radius:12px;
+    background:rgba(122,162,255,.10);
+    color:var(--text);
+    font-size:13px;
+  }
+
+  details{
+    border:1px solid var(--border);
+    border-radius:14px;
+    background:rgba(15,23,48,.45);
+    overflow:hidden;
+  }
+  summary{
+    cursor:pointer;
+    padding:12px 14px;
+    list-style:none;
+    display:flex; align-items:center; justify-content:space-between; gap:10px;
+    background:rgba(18,28,58,.4);
+  }
+  summary::-webkit-details-marker{display:none}
+  summary .sleft{display:flex; flex-direction:column; gap:2px}
+  summary .sleft b{font-size:13px}
+  summary .sleft span{font-size:12px; color:var(--muted)}
+  .detailbody{padding:12px 14px; font-size:13px; color:var(--text)}
+
+  .refs{display:grid; gap:10px;}
+  .ref{
+    border:1px solid var(--border);
+    border-radius:14px;
+    background:rgba(15,23,48,.45);
+    padding:12px 14px;
+  }
+  .ref .rid{font-family:var(--mono); font-size:12px; color:var(--muted)}
+  .ref .rbody{font-size:13px; margin-top:6px}
+
+  sup.cite{font-size:11px; margin-left:2px;}
+  sup.cite a{
+    color:var(--accent);
+    padding:2px 4px;
+    border-radius:8px;
+    border:1px solid rgba(122,162,255,.35);
+    background:rgba(122,162,255,.12);
+    text-decoration:none;
+  }
+  sup.cite a:hover{background:rgba(122,162,255,.18)}
+
+  .grid{display:grid; grid-template-columns:repeat(auto-fit, minmax(260px,1fr)); gap:16px}
+  .tile{
+    border:1px solid var(--border);
+    border-radius:var(--radius);
+    background:rgba(15,23,48,.55);
+    box-shadow:var(--shadow);
+    padding:16px;
+  }
+  .tile h3{margin:0 0 8px}
+  .tile p{margin:0; color:var(--muted); font-size:13px}
+  .badge{
+    display:inline-block;
+    margin-top:12px;
+    padding:6px 10px;
+    border-radius:999px;
+    border:1px solid var(--border);
+    background:rgba(69,212,131,.12);
+    color:var(--text);
+    font-size:12px;
+  }
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap topbar">
+    <div class="brand">
+      <div class="logo" aria-hidden="true"></div>
+      <div class="title">
+        <h1>Understanding Your Diagnostic Mammogram</h1>
+        <p>Why you were called back and what happens during a diagnostic mammogram.</p>
+      </div>
+    </div>
+    <div class="siteNav" aria-label="Site navigation">
+      <a href="index.html" title="Home"><span class="dot" aria-hidden="true"></span>Home</a>
+      <a href="breast-pathology-excision-reference.html" title="RadPath">RadPath</a>
+      <a href="patient-info.html" class="active" title="Patient information">Patient info</a>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+  
+    <article class="card" id="top">
+      <div class="hdr">
+        <div>
+          <h2>At a glance</h2>
+          <p>Plain-language answers to common questions.</p>
+        </div>
+      </div>
+      <div class="body">
+        <div class="note"><p>What Is a Diagnostic Mammogram?</p></div>
+      </div>
+    </article>
+        
+    <article class="card">
+      <div class="hdr"><div><h2>What Is a Diagnostic Mammogram?</h2></div></div>
+      <div class="body"><p>A diagnostic mammogram is a specialized breast X-ray performed when there is a specific concern about your breast health. Unlike a screening mammogram (which is done when you have no symptoms), a diagnostic mammogram is used to investigate an abnormality that has already been identified.<sup class="cite"><a href="#ref-1" title="Jump to reference 1">[1]</a></sup></p></div>
+    </article>
+        
+    <article class="card">
+      <div class="hdr"><div><h2>When Is a Diagnostic Mammogram Needed?</h2></div></div>
+      <div class="body"><p>Your doctor may recommend a diagnostic mammogram if you have:<sup class="cite"><a href="#ref-2" title="Jump to reference 2">[2]</a></sup></p><p>• An abnormal finding on a screening mammogram that needs further evaluation</p><p>• A breast lump or mass you or your doctor can feel</p><p>• Breast pain that is persistent and focused in one area</p><p>• Nipple discharge or nipple changes (such as new inversion or retraction)</p><p>• Skin changes on your breast</p><p>• Changes in breast shape or size</p><p>• A previous breast biopsy showing certain findings that need monitoring</p><p>Age considerations: For women 30 years and older with breast symptoms, a diagnostic mammogram is typically recommended along with ultrasound. For women under 30, ultrasound is usually performed first, with mammography added if needed.<sup class="cite"><a href="#ref-2" title="Jump to reference 2">[2]</a></sup><sup class="cite"><a href="#ref-3" title="Jump to reference 3">[3]</a></sup></p></div>
+    </article>
+        
+    <article class="card">
+      <div class="hdr"><div><h2>How Is a Diagnostic Mammogram Different from a Screening Mammogram?</h2></div></div>
+      <div class="body"><p>While both use X-rays to image the breast, diagnostic mammograms provide more detailed information:<sup class="cite"><a href="#ref-1" title="Jump to reference 1">[1]</a></sup></p><p>Screening mammogram:</p><p>• Performed when you have no symptoms</p><p>• Uses standard two views of each breast (top-to-bottom and side views)</p><p>• Designed to detect early breast cancer in healthy women</p><p>Diagnostic mammogram:</p><p>• Performed to investigate a specific problem</p><p>• Uses additional specialized views, including:</p><p>• Spot compression views (to separate overlapping tissue)</p><p>• Magnification views (to examine calcifications or masses more closely)</p><p>• Special angled views to better visualize specific areas</p><p>• Takes more time and images than a screening mammogram</p><p>• A radiologist is often available to review images while you wait</p></div>
+    </article>
+        
+    <article class="card">
+      <div class="hdr"><div><h2>What to Expect During Your Diagnostic Mammogram</h2></div></div>
+      <div class="body"><p>Before the exam:</p><p>• Avoid using deodorant, powder, lotion, or cream on your breasts or underarms on the day of your exam, as these can appear as white spots on the X-ray</p><p>• Wear a two-piece outfit so you only need to undress from the waist up</p><p>• Bring any previous mammogram images or reports if you had them done at a different facility</p><p>• Inform the technologist if you are pregnant or breastfeeding</p><p>During the exam:</p><p>• You will stand in front of the mammography machine</p><p>• A technologist will position your breast on a flat plate</p><p>• Another plate will compress your breast from above to spread the tissue evenly</p><p>• The compression may feel uncomfortable but only lasts a few seconds for each image</p><p>• Multiple images will be taken from different angles</p><p>• The entire exam typically takes 30-60 minutes, longer than a screening mammogram</p><p>After the exam:</p><p>• You may be asked to wait while the radiologist reviews your images</p><p>• Additional images may be needed if the radiologist wants to examine a specific area more closely</p><p>• This does not necessarily mean something is wrong—it simply means they want the best possible images</p></div>
+    </article>
+        
+    <article class="card">
+      <div class="hdr"><div><h2>Understanding Your Results</h2></div></div>
+      <div class="body"><p>Your diagnostic mammogram will be assigned a BI-RADS (Breast Imaging Reporting and Data System) category:<sup class="cite"><a href="#ref-2" title="Jump to reference 2">[2]</a></sup></p><p>Category 1 (Negative): No abnormalities found. Return to routine screening.</p><p>Category 2 (Benign): Non-cancerous findings identified (such as cysts or calcifications that are clearly benign). Return to routine screening.</p><p>Category 3 (Probably Benign): A finding with less than 2% chance of being cancer. Short-term follow-up imaging is recommended, typically at 6, 12, and 24 months.<sup class="cite"><a href="#ref-2" title="Jump to reference 2">[2]</a></sup></p><p>Category 4 (Suspicious): A finding that has a chance of being cancer. A biopsy is recommended to determine if cancer is present.</p><p>Category 5 (Highly Suggestive of Malignancy): A finding with a very high probability of being cancer. A biopsy is needed.</p><p>Category 6: This category is used when you already have a known breast cancer diagnosis.</p></div>
+    </article>
+        
+    <article class="card">
+      <div class="hdr"><div><h2>What Happens Next?</h2></div></div>
+      <div class="body"><p>Your next steps depend on your results:<sup class="cite"><a href="#ref-2" title="Jump to reference 2">[2]</a></sup></p><p>• If your results are normal (Category 1 or 2): You will return to your regular screening schedule.</p><p>• If you need follow-up imaging (Category 3): You will have repeat mammograms at shorter intervals to ensure any findings remain stable.</p><p>• If a biopsy is recommended (Category 4 or 5): Your doctor will discuss the type of biopsy needed. Most biopsies are done with a needle (core needle biopsy) rather than surgery and can be performed in the radiology department.</p><p>Important Points to Remember</p><p>• A diagnostic mammogram is more thorough than a screening mammogram and provides detailed information about specific breast concerns.</p><p>• Being called back for a diagnostic mammogram after a screening exam is common—about 10% of screening mammograms require additional imaging.<sup class="cite"><a href="#ref-4" title="Jump to reference 4">[4]</a></sup></p><p>• Most diagnostic mammograms do not find cancer. Many breast changes are benign (non-cancerous).</p><p>• Digital breast tomosynthesis (3D mammography) may be used during your diagnostic mammogram to provide even more detailed images.<sup class="cite"><a href="#ref-2" title="Jump to reference 2">[2]</a></sup><sup class="cite"><a href="#ref-5" title="Jump to reference 5">[5]</a></sup></p><p>• If you are breastfeeding, you can still have a diagnostic mammogram. Try to pump or breastfeed just before the exam to improve image quality and comfort.<sup class="cite"><a href="#ref-2" title="Jump to reference 2">[2]</a></sup></p><p>Questions to Ask Your Doctor</p><p>• Why do I need a diagnostic mammogram?</p><p>• What specific area or finding is being evaluated?</p><p>• When will I receive my results?</p><p>• What are the next steps based on my results?</p><p>• Do I need any additional imaging tests, such as ultrasound or MRI?</p><p>Remember, your healthcare team is here to answer your questions and guide you through the diagnostic process. Don&#x27;t hesitate to ask for clarification about anything you don&#x27;t understand.</p></div>
+    </article>
+        
+    <article class="card" id="references">
+      <div class="hdr"><div><h2>References</h2><p>Citations in the text link here.</p></div></div>
+      <div class="body">
+        <details class="refsDetails">
+          <summary>
+            <div class="sleft">
+              <b>Show references</b>
+              <span>Click to expand/collapse the bibliography</span>
+            </div>
+            <span class="badge">Toggle</span>
+          </summary>
+          <div class="detailbody">
+            <div class="refs">
+      <div class="ref" id="ref-1">
+        <div class="rid">[1] <a href="#top" title="Back to top">↑</a></div>
+        <div class="rbody">Society of surgical oncology medical student &amp;amp; trainee primer for breast surgical oncology. Marissa K. Boyle, Julia M. Selfridge, Rachel E. Sargent, et al.</div>
+      </div>
+
+      <div class="ref" id="ref-2">
+        <div class="rid">[2] <a href="#top" title="Back to top">↑</a></div>
+        <div class="rbody">Breast Cancer Screening and Diagnosis. National Comprehensive Cancer Network. Updated 2025-03-28.</div>
+      </div>
+
+      <div class="ref" id="ref-3">
+        <div class="rid">[3] <a href="#top" title="Back to top">↑</a></div>
+        <div class="rbody">ESR Essentials: Diagnostic Work-Up in Patients With Symptomatic Breast Disease-Practice Recommendations by the European Society of Breast Imaging. Athanasiou A, Appelman L, Pijnappel RM, et al. European Radiology. 2025;35(2):723-732. doi:10.1007/s00330-024-10980-5.</div>
+      </div>
+
+      <div class="ref" id="ref-4">
+        <div class="rid">[4] <a href="#top" title="Back to top">↑</a></div>
+        <div class="rbody">Comparison of Screening Mammography in the United States and the United Kingdom. Smith-Bindman R, Chu PW, Miglioretti DL, et al. JAMA. 2003;290(16):2129-37. doi:10.1001/jama.290.16.2129.</div>
+      </div>
+
+      <div class="ref" id="ref-5">
+        <div class="rid">[5] <a href="#top" title="Back to top">↑</a></div>
+        <div class="rbody">ACR Appropriateness Criteria® Imaging of Invasive Breast Cancer. McDonald ES, Scheel JR, Lewin AA, et al. Journal of the American College of Radiology : JACR. 2024;21(6S):S168-S202. doi:10.1016/j.jacr.2024.02.021.</div>
+      </div></div>
+          </div>
+        </details>
+      </div>
+    </article>
+</main>
+
+<script>
+  function openRefsIfNeeded(){
+    const h = (location.hash || "").toLowerCase();
+    const d = document.querySelector(".refsDetails");
+    if(!d) return;
+    if(h === "#references" || h.startsWith("#ref-")) d.open = true;
+  }
+  window.addEventListener("hashchange", openRefsIfNeeded);
+
+  document.addEventListener("click", (e)=>{
+    const a = e.target && e.target.closest ? e.target.closest('a[href^="#ref-"], a[href="#references"]') : null;
+    if(!a) return;
+    const d = document.querySelector(".refsDetails");
+    if(d) d.open = true;
+  });
+
+  openRefsIfNeeded();
+</script>
+</body>
+</html>

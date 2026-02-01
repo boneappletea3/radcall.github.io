@@ -1,0 +1,337 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Breast Cancer Screening During Pregnancy</title>
+<style>
+  :root{
+    --bg:#0b1020;
+    --panel:#0f1730;
+    --panel2:#121c3a;
+    --text:#eaf0ff;
+    --muted:#b7c2e6;
+    --accent:#7aa2ff;
+    --accent2:#45d483;
+    --border:rgba(255,255,255,.12);
+    --shadow:0 10px 30px rgba(0,0,0,.35);
+    --radius:16px;
+    --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+    --sans: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif;
+  }
+  *{box-sizing:border-box}
+  body{
+    margin:0;
+    font-family:var(--sans);
+    background:radial-gradient(1200px 800px at 20% 10%, rgba(122,162,255,.25), transparent 60%),
+               radial-gradient(900px 700px at 80% 30%, rgba(69,212,131,.15), transparent 60%),
+               var(--bg);
+    color:var(--text);
+    line-height:1.55;
+  }
+  a{color:var(--accent); text-decoration:none}
+  a:hover{text-decoration:underline}
+  header{
+    position:sticky; top:0; z-index:50;
+    background:rgba(11,16,32,.82);
+    backdrop-filter: blur(10px);
+    border-bottom:1px solid var(--border);
+  }
+  .wrap{max-width:1100px; margin:0 auto; padding:16px 18px}
+  .topbar{display:flex; gap:14px; align-items:center; justify-content:space-between;}
+  .brand{display:flex; gap:12px; align-items:center}
+  .logo{
+    width:44px; height:44px; border-radius:14px;
+    background:linear-gradient(135deg, rgba(122,162,255,.9), rgba(69,212,131,.8));
+    box-shadow:var(--shadow);
+  }
+  .title h1{margin:0; font-size:16px; letter-spacing:.2px}
+  .title p{margin:2px 0 0; color:var(--muted); font-size:12px}
+
+  .siteNav{display:flex; gap:8px; align-items:center; flex-wrap:wrap; margin-left:auto}
+  .siteNav a{
+    display:inline-flex; align-items:center; gap:6px;
+    padding:8px 10px;
+    border-radius:999px;
+    border:1px solid var(--border);
+    background:rgba(15,23,48,.6);
+    color:var(--muted);
+    font-size:12px;
+    text-decoration:none;
+    white-space:nowrap
+  }
+  .siteNav a:hover{
+    background:rgba(122,162,255,.12);
+    border-color:rgba(122,162,255,.25);
+    color:var(--text);
+    text-decoration:none
+  }
+  .siteNav a.active{
+    background:rgba(69,212,131,.14);
+    border-color:rgba(69,212,131,.35);
+    color:var(--text)
+  }
+  .siteNav .dot{
+    width:6px; height:6px; border-radius:99px; display:inline-block;
+    background:rgba(69,212,131,.9);
+    box-shadow:0 0 0 3px rgba(69,212,131,.12)
+  }
+
+  .card{
+    border:1px solid var(--border);
+    border-radius:var(--radius);
+    background:rgba(15,23,48,.58);
+    box-shadow:var(--shadow);
+    overflow:hidden;
+  }
+  .card + .card{margin-top:16px}
+  .card .hdr{
+    padding:16px;
+    border-bottom:1px solid var(--border);
+    background:rgba(18,28,58,.55);
+    display:flex; align-items:flex-start; justify-content:space-between; gap:12px;
+  }
+  .card .hdr h2{margin:0; font-size:15px}
+  .card .hdr p{margin:6px 0 0; color:var(--muted); font-size:12px}
+  .card .body{padding:16px; font-size:14px; color:var(--text)}
+  .note{
+    border-left:4px solid rgba(122,162,255,.65);
+    padding:10px 12px;
+    border-radius:12px;
+    background:rgba(122,162,255,.10);
+    color:var(--text);
+    font-size:13px;
+  }
+
+  details{
+    border:1px solid var(--border);
+    border-radius:14px;
+    background:rgba(15,23,48,.45);
+    overflow:hidden;
+  }
+  summary{
+    cursor:pointer;
+    padding:12px 14px;
+    list-style:none;
+    display:flex; align-items:center; justify-content:space-between; gap:10px;
+    background:rgba(18,28,58,.4);
+  }
+  summary::-webkit-details-marker{display:none}
+  summary .sleft{display:flex; flex-direction:column; gap:2px}
+  summary .sleft b{font-size:13px}
+  summary .sleft span{font-size:12px; color:var(--muted)}
+  .detailbody{padding:12px 14px; font-size:13px; color:var(--text)}
+
+  .refs{display:grid; gap:10px;}
+  .ref{
+    border:1px solid var(--border);
+    border-radius:14px;
+    background:rgba(15,23,48,.45);
+    padding:12px 14px;
+  }
+  .ref .rid{font-family:var(--mono); font-size:12px; color:var(--muted)}
+  .ref .rbody{font-size:13px; margin-top:6px}
+
+  sup.cite{font-size:11px; margin-left:2px;}
+  sup.cite a{
+    color:var(--accent);
+    padding:2px 4px;
+    border-radius:8px;
+    border:1px solid rgba(122,162,255,.35);
+    background:rgba(122,162,255,.12);
+    text-decoration:none;
+  }
+  sup.cite a:hover{background:rgba(122,162,255,.18)}
+
+  .grid{display:grid; grid-template-columns:repeat(auto-fit, minmax(260px,1fr)); gap:16px}
+  .tile{
+    border:1px solid var(--border);
+    border-radius:var(--radius);
+    background:rgba(15,23,48,.55);
+    box-shadow:var(--shadow);
+    padding:16px;
+  }
+  .tile h3{margin:0 0 8px}
+  .tile p{margin:0; color:var(--muted); font-size:13px}
+  .badge{
+    display:inline-block;
+    margin-top:12px;
+    padding:6px 10px;
+    border-radius:999px;
+    border:1px solid var(--border);
+    background:rgba(69,212,131,.12);
+    color:var(--text);
+    font-size:12px;
+  }
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap topbar">
+    <div class="brand">
+      <div class="logo" aria-hidden="true"></div>
+      <div class="title">
+        <h1>Breast Cancer Screening During Pregnancy</h1>
+        <p>Breast cancer screening and evaluation can be performed safely during pregnancy.</p>
+      </div>
+    </div>
+    <div class="siteNav" aria-label="Site navigation">
+      <a href="index.html" title="Home"><span class="dot" aria-hidden="true"></span>Home</a>
+      <a href="breast-pathology-excision-reference.html" title="RadPath">RadPath</a>
+      <a href="patient-info.html" class="active" title="Patient information">Patient info</a>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+  
+    <article class="card" id="top">
+      <div class="hdr">
+        <div>
+          <h2>At a glance</h2>
+          <p>Plain-language answers to common questions.</p>
+        </div>
+      </div>
+      <div class="body">
+        <div class="note"><p>What You Need to Know About Breast Cancer Screening During Pregnancy</p></div>
+      </div>
+    </article>
+        
+    <article class="card">
+      <div class="hdr"><div><h2>What You Need to Know About Breast Cancer Screening During Pregnancy</h2></div></div>
+      <div class="body"><p>Breast cancer during pregnancy is uncommon, but it is important to know that breast cancer screening and evaluation can be safely performed while you are pregnant. This handout will help you understand when screening is recommended, what symptoms to watch for, and how breast imaging is safely performed during pregnancy.</p></div>
+    </article>
+        
+    <article class="card">
+      <div class="hdr"><div><h2>Is Breast Cancer Screening Safe During Pregnancy?</h2></div></div>
+      <div class="body"><p>Yes, breast cancer screening is safe during pregnancy. There is no contraindication to mammography during pregnancy.<sup class="cite"><a href="#ref-1" title="Jump to reference 1">[1]</a></sup><sup class="cite"><a href="#ref-2" title="Jump to reference 2">[2]</a></sup> The radiation dose to your baby from a mammogram is extremely low (less than 0.03 mGy), which is many times below the level that could cause harm to a developing baby.<sup class="cite"><a href="#ref-3" title="Jump to reference 3">[3]</a></sup> This dose is well below the 50 mGy threshold associated with any risk to the fetus.<sup class="cite"><a href="#ref-3" title="Jump to reference 3">[3]</a></sup></p><p>To put this in perspective, the radiation exposure from a mammogram is less than what you would receive from about 7 weeks of normal background radiation in the environment.<sup class="cite"><a href="#ref-4" title="Jump to reference 4">[4]</a></sup></p></div>
+    </article>
+        
+    <article class="card">
+      <div class="hdr"><div><h2>Should I Continue My Regular Screening Mammograms During Pregnancy?</h2></div></div>
+      <div class="body"><p>The answer depends on your breast cancer risk:</p><p>For women at average risk (age 40 and older):</p><p>Screening mammography is safe and can be performed during pregnancy.<sup class="cite"><a href="#ref-1" title="Jump to reference 1">[1]</a></sup><sup class="cite"><a href="#ref-2" title="Jump to reference 2">[2]</a></sup> However, because pregnancy-associated breast cancer is uncommon and mammography has slightly decreased accuracy during pregnancy due to hormonal changes in breast tissue, you and your doctor may choose to delay routine screening until after delivery if:<sup class="cite"><a href="#ref-1" title="Jump to reference 1">[1]</a></sup></p><p>• Your last mammogram was recent and normal</p><p>• Your delivery date is approaching</p><p>• You have no breast symptoms or concerns</p><p>This is a personal decision that should be made through discussion with your healthcare provider.</p><p>For women at increased risk for breast cancer:</p><p>If you are at increased risk for breast cancer (due to family history, genetic mutations like BRCA1 or BRCA2, or other risk factors), it is important to continue your age-appropriate screening mammography at routine intervals during pregnancy.<sup class="cite"><a href="#ref-1" title="Jump to reference 1">[1]</a></sup> Screening should not be delayed in high-risk women.</p></div>
+    </article>
+        
+    <article class="card">
+      <div class="hdr"><div><h2>What Breast Symptoms Should I Report During Pregnancy?</h2></div></div>
+      <div class="body"><p>Your breasts will naturally change during pregnancy due to hormones preparing your body for breastfeeding. However, you should promptly report any of the following symptoms to your healthcare provider:<sup class="cite"><a href="#ref-1" title="Jump to reference 1">[1]</a></sup><sup class="cite"><a href="#ref-2" title="Jump to reference 2">[2]</a></sup><sup class="cite"><a href="#ref-5" title="Jump to reference 5">[5]</a></sup></p><p>Contact your doctor if you notice:</p><p>• A breast lump or mass that you or your doctor can feel</p><p>• Persistent breast pain in one specific area lasting 4-6 weeks (some breast tenderness is normal during pregnancy, but focused, persistent pain should be evaluated)</p><p>• Nipple discharge that is persistent, spontaneous, comes from one duct, affects only one breast, and is bloody or clear (note: some nipple discharge is common during pregnancy, but bloody discharge that occurs more than 1-2 times should be evaluated)</p><p>• Nipple changes such as new inversion (turning inward) or retraction</p><p>• Skin changes on your breast, such as redness, dimpling, or thickening</p><p>• A lump in your armpit (axilla)</p><p>It is important to be familiar with how your breasts normally look and feel, and to report any changes to your healthcare provider. This is called &quot;breast self-awareness.&quot;<sup class="cite"><a href="#ref-1" title="Jump to reference 1">[1]</a></sup><sup class="cite"><a href="#ref-6" title="Jump to reference 6">[6]</a></sup></p></div>
+    </article>
+        
+    <article class="card">
+      <div class="hdr"><div><h2>How Are Breast Symptoms Evaluated During Pregnancy?</h2></div></div>
+      <div class="body"><p>If you have a breast symptom during pregnancy, your doctor will perform a clinical breast examination and recommend imaging based on your specific concern.<sup class="cite"><a href="#ref-1" title="Jump to reference 1">[1]</a></sup><sup class="cite"><a href="#ref-2" title="Jump to reference 2">[2]</a></sup><sup class="cite"><a href="#ref-5" title="Jump to reference 5">[5]</a></sup></p><p>Ultrasound is typically the first imaging test used to evaluate breast symptoms during pregnancy because it does not use radiation and is highly accurate.<sup class="cite"><a href="#ref-5" title="Jump to reference 5">[5]</a></sup><sup class="cite"><a href="#ref-7" title="Jump to reference 7">[7]</a></sup> Ultrasound is safe for both you and your baby.</p><p>Mammography may also be recommended if:<sup class="cite"><a href="#ref-1" title="Jump to reference 1">[1]</a></sup><sup class="cite"><a href="#ref-3" title="Jump to reference 3">[3]</a></sup><sup class="cite"><a href="#ref-7" title="Jump to reference 7">[7]</a></sup></p><p>• Ultrasound shows suspicious findings</p><p>• Ultrasound does not explain the cause of your symptom</p><p>• Your doctor wants to check for calcifications (tiny calcium deposits) that may not be visible on ultrasound</p><p>• You are diagnosed with breast cancer and need to check both breasts for additional areas of concern</p><p>Breast MRI with contrast (gadolinium) is not recommended during pregnancy because the contrast agent crosses the placenta and reaches the baby, and the safety of gadolinium exposure to the developing baby is not well established.<sup class="cite"><a href="#ref-1" title="Jump to reference 1">[1]</a></sup><sup class="cite"><a href="#ref-2" title="Jump to reference 2">[2]</a></sup><sup class="cite"><a href="#ref-5" title="Jump to reference 5">[5]</a></sup> Non-contrast MRI is also not recommended because it is not sensitive enough to detect breast cancer.</p></div>
+    </article>
+        
+    <article class="card">
+      <div class="hdr"><div><h2>What If a Biopsy Is Needed During Pregnancy?</h2></div></div>
+      <div class="body"><p>If imaging shows a suspicious finding, a core needle biopsy can be safely performed during pregnancy using local anesthesia (numbing medicine).<sup class="cite"><a href="#ref-1" title="Jump to reference 1">[1]</a></sup><sup class="cite"><a href="#ref-5" title="Jump to reference 5">[5]</a></sup><sup class="cite"><a href="#ref-8" title="Jump to reference 8">[8]</a></sup><sup class="cite"><a href="#ref-9" title="Jump to reference 9">[9]</a></sup> This is the standard way to obtain a tissue diagnosis.</p><p>The risk of developing a milk fistula (an abnormal connection that leaks milk) after a biopsy is very rare, so if a biopsy is recommended, it should be performed promptly without delay.<sup class="cite"><a href="#ref-1" title="Jump to reference 1">[1]</a></sup><sup class="cite"><a href="#ref-5" title="Jump to reference 5">[5]</a></sup></p></div>
+    </article>
+        
+    <article class="card">
+      <div class="hdr"><div><h2>Why Does Pregnancy Make Breast Imaging More Challenging?</h2></div></div>
+      <div class="body"><p>During pregnancy, hormonal changes cause your breasts to become denser and more glandular as they prepare for breastfeeding.<sup class="cite"><a href="#ref-3" title="Jump to reference 3">[3]</a></sup><sup class="cite"><a href="#ref-5" title="Jump to reference 5">[5]</a></sup> These normal changes can:</p><p>• Make it harder to detect abnormalities on mammography (decreased sensitivity)</p><p>• Make normal breast tissue appear more prominent, which can sometimes be mistaken for an abnormality (decreased specificity)</p><p>• Make clinical breast examination more difficult because the breast tissue feels different</p><p>Despite these challenges, imaging evaluation should never be delayed if you have a breast concern, as delayed diagnosis of pregnancy-associated breast cancer can lead to worse outcomes.<sup class="cite"><a href="#ref-5" title="Jump to reference 5">[5]</a></sup></p></div>
+    </article>
+        
+    <article class="card">
+      <div class="hdr"><div><h2>Understanding Radiation Safety During Pregnancy</h2></div></div>
+      <div class="body"><p>Many pregnant women worry about radiation exposure from mammography. Here are the important facts:<sup class="cite"><a href="#ref-3" title="Jump to reference 3">[3]</a></sup><sup class="cite"><a href="#ref-10" title="Jump to reference 10">[10]</a></sup></p><p>Radiation doses below 50 mGy are not associated with:</p><p>• Increased risk of birth defects</p><p>• Increased risk of pregnancy loss</p><p>• Harm to the developing baby</p><p>A standard mammogram delivers less than 0.03 mGy to the baby - more than 1,000 times below the safety threshold.<sup class="cite"><a href="#ref-3" title="Jump to reference 3">[3]</a></sup></p><p>Abdominal shielding (placing a lead apron over your abdomen) is generally not recommended during mammography because it provides minimal benefit and may actually increase scattered radiation exposure to the baby.<sup class="cite"><a href="#ref-3" title="Jump to reference 3">[3]</a></sup></p><p>The small theoretical risk of childhood cancer from diagnostic radiation is estimated to be very low (an additional risk of 0.022% to 0.06% following exposure to 10 mGy of radiation).<sup class="cite"><a href="#ref-11" title="Jump to reference 11">[11]</a></sup> The radiation dose from mammography is far below this level.</p><p>Important Points to Remember</p><p>• Breast cancer screening with mammography is safe during pregnancy and does not harm your baby.<sup class="cite"><a href="#ref-1" title="Jump to reference 1">[1]</a></sup><sup class="cite"><a href="#ref-2" title="Jump to reference 2">[2]</a></sup></p><p>• Women at increased risk for breast cancer should continue their routine screening during pregnancy.<sup class="cite"><a href="#ref-1" title="Jump to reference 1">[1]</a></sup></p><p>• Women at average risk may choose to delay routine screening until after delivery, depending on when their last mammogram was performed and their delivery date.<sup class="cite"><a href="#ref-1" title="Jump to reference 1">[1]</a></sup></p><p>• Be aware of how your breasts normally look and feel, and report any changes to your healthcare provider promptly.<sup class="cite"><a href="#ref-1" title="Jump to reference 1">[1]</a></sup><sup class="cite"><a href="#ref-6" title="Jump to reference 6">[6]</a></sup></p><p>• Ultrasound is the first imaging test used to evaluate breast symptoms during pregnancy.<sup class="cite"><a href="#ref-5" title="Jump to reference 5">[5]</a></sup></p><p>• Mammography can be safely added if needed to fully evaluate a breast concern.<sup class="cite"><a href="#ref-1" title="Jump to reference 1">[1]</a></sup><sup class="cite"><a href="#ref-3" title="Jump to reference 3">[3]</a></sup><sup class="cite"><a href="#ref-7" title="Jump to reference 7">[7]</a></sup></p><p>• Breast MRI with gadolinium contrast is not recommended during pregnancy.<sup class="cite"><a href="#ref-1" title="Jump to reference 1">[1]</a></sup><sup class="cite"><a href="#ref-2" title="Jump to reference 2">[2]</a></sup><sup class="cite"><a href="#ref-5" title="Jump to reference 5">[5]</a></sup></p><p>• If a biopsy is needed, it can be safely performed during pregnancy.<sup class="cite"><a href="#ref-1" title="Jump to reference 1">[1]</a></sup><sup class="cite"><a href="#ref-5" title="Jump to reference 5">[5]</a></sup><sup class="cite"><a href="#ref-8" title="Jump to reference 8">[8]</a></sup></p><p>• Do not delay evaluation of a breast concern because you are pregnant - early diagnosis is important.<sup class="cite"><a href="#ref-5" title="Jump to reference 5">[5]</a></sup></p></div>
+    </article>
+        
+    <article class="card">
+      <div class="hdr"><div><h2>Normal Breast Changes During Pregnancy</h2></div></div>
+      <div class="body"><p>It is helpful to know what breast changes are normal during pregnancy so you can recognize when something may need evaluation:</p><p>Normal changes include:</p><p>• Breast enlargement and fullness</p><p>• Increased breast tenderness (especially in the first trimester)</p><p>• Darkening of the nipples and areola (the area around the nipple)</p><p>• Enlargement of small bumps on the areola (Montgomery&#x27;s tubercles)</p><p>• Visible veins on the breast surface</p><p>• Some nipple discharge, especially in the later stages of pregnancy</p><p>• Brief episodes of bloody nipple discharge (1-2 episodes)<sup class="cite"><a href="#ref-1" title="Jump to reference 1">[1]</a></sup></p><p>Changes that need evaluation:</p><p>• A distinct lump that persists</p><p>• Persistent bloody nipple discharge (more than 1-2 episodes)<sup class="cite"><a href="#ref-1" title="Jump to reference 1">[1]</a></sup></p><p>• Skin changes such as redness, dimpling, or puckering</p><p>• Nipple retraction or inversion that is new</p><p>• Persistent, focused breast pain in one area lasting 4-6 weeks<sup class="cite"><a href="#ref-1" title="Jump to reference 1">[1]</a></sup></p><p>Questions to Ask Your Doctor</p><p>• Should I continue my routine screening mammogram during pregnancy?</p><p>• What breast changes are normal during pregnancy?</p><p>• When should I call if I notice a breast change?</p><p>• If I need a mammogram, how will my baby be protected?</p><p>• What happens if imaging shows an abnormality?</p><p>Remember, your healthcare team is here to answer your questions and ensure both you and your baby receive the best possible care. Do not hesitate to report any breast concerns during your pregnancy.</p></div>
+    </article>
+        
+    <article class="card" id="references">
+      <div class="hdr"><div><h2>References</h2><p>Citations in the text link here.</p></div></div>
+      <div class="body">
+        <details class="refsDetails">
+          <summary>
+            <div class="sleft">
+              <b>Show references</b>
+              <span>Click to expand/collapse the bibliography</span>
+            </div>
+            <span class="badge">Toggle</span>
+          </summary>
+          <div class="detailbody">
+            <div class="refs">
+      <div class="ref" id="ref-1">
+        <div class="rid">[1] <a href="#top" title="Back to top">↑</a></div>
+        <div class="rbody">Breast Cancer Screening and Diagnosis. National Comprehensive Cancer Network. Updated 2025-03-28.</div>
+      </div>
+
+      <div class="ref" id="ref-2">
+        <div class="rid">[2] <a href="#top" title="Back to top">↑</a></div>
+        <div class="rbody">ACR Appropriateness Criteria® Breast Imaging During Pregnancy. Expert Panel on Breast Imaging, Salkowski LR, Lewin AA, et al. Journal of the American College of Radiology : JACR. 2025;22(11S):S492-S507. doi:10.1016/j.jacr.2025.08.045.</div>
+      </div>
+
+      <div class="ref" id="ref-3">
+        <div class="rid">[3] <a href="#top" title="Back to top">↑</a></div>
+        <div class="rbody">Management of Cancer During Pregnancy: ASCO Guideline. Loren AW, Lacchetti C, Amant F, et al. Journal of Clinical Oncology : Official Journal of the American Society of Clinical Oncology. 2026;44(3):200-251. doi:10.1200/JCO-25-02115.</div>
+      </div>
+
+      <div class="ref" id="ref-4">
+        <div class="rid">[4] <a href="#top" title="Back to top">↑</a></div>
+        <div class="rbody">Breast Cancer Diagnosed During Pregnancy: Adapting Recent Advances in Breast Cancer Care for Pregnant Patients. Loibl S, Schmidt A, Gentilini O, et al. JAMA Oncology. 2015;1(8):1145-53. doi:10.1001/jamaoncol.2015.2413.</div>
+      </div>
+
+      <div class="ref" id="ref-5">
+        <div class="rid">[5] <a href="#top" title="Back to top">↑</a></div>
+        <div class="rbody">Breast Imaging and Intervention During Pregnancy and Lactation. Peterson MS, Gegios AR, Elezaby MA, et al. Radiographics : A Review Publication of the Radiological Society of North America, Inc. 2023;43(10):e230014. doi:10.1148/rg.230014.</div>
+      </div>
+
+      <div class="ref" id="ref-6">
+        <div class="rid">[6] <a href="#top" title="Back to top">↑</a></div>
+        <div class="rbody">Practice Bulletin Number 179: Breast Cancer Risk Assessment and Screening in Average-Risk Women. Obstetrics and Gynecology. 2017;130(1):e1-e16. doi:10.1097/AOG.0000000000002158.</div>
+      </div>
+
+      <div class="ref" id="ref-7">
+        <div class="rid">[7] <a href="#top" title="Back to top">↑</a></div>
+        <div class="rbody">ACR Appropriateness Criteria Breast Imaging Of Pregnant and Lactating Women. Expert Panel on Breast Imaging:, diFlorio-Alexander RM, Slanetz PJ, et al.&#x27;.</div>
+      </div>
+
+      <div class="ref" id="ref-8">
+        <div class="rid">[8] <a href="#top" title="Back to top">↑</a></div>
+        <div class="rbody">Society of surgical oncology medical student &amp;amp; trainee primer for breast surgical oncology. Marissa K. Boyle, Julia M. Selfridge, Rachel E. Sargent, et al.</div>
+      </div>
+
+      <div class="ref" id="ref-9">
+        <div class="rid">[9] <a href="#top" title="Back to top">↑</a></div>
+        <div class="rbody">Breast Cancer in Pregnancy. Amant F, Loibl S, Neven P, Van Calsteren K. Lancet (London, England). 2012;379(9815):570-9. doi:10.1016/S0140-6736(11)61092-1.</div>
+      </div>
+
+      <div class="ref" id="ref-10">
+        <div class="rid">[10] <a href="#top" title="Back to top">↑</a></div>
+        <div class="rbody">Guidelines for Diagnostic Imaging During Pregnancy and Lactation. Joshua Copel, Yasser El-Sayed, R. Phillips Heine, Kurt R. Wharton. American College of Obstetricians and Gynecologists (2017).</div>
+      </div>
+
+      <div class="ref" id="ref-11">
+        <div class="rid">[11] <a href="#top" title="Back to top">↑</a></div>
+        <div class="rbody">Diagnostic Cardiovascular Imaging and Therapeutic Strategies in Pregnancy: JACC Focus Seminar 4/5. Bello NA, Bairey Merz CN, Brown H, et al. Journal of the American College of Cardiology. 2021;77(14):1813-1822. doi:10.1016/j.jacc.2021.01.056.</div>
+      </div></div>
+          </div>
+        </details>
+      </div>
+    </article>
+</main>
+
+<script>
+  function openRefsIfNeeded(){
+    const h = (location.hash || "").toLowerCase();
+    const d = document.querySelector(".refsDetails");
+    if(!d) return;
+    if(h === "#references" || h.startsWith("#ref-")) d.open = true;
+  }
+  window.addEventListener("hashchange", openRefsIfNeeded);
+
+  document.addEventListener("click", (e)=>{
+    const a = e.target && e.target.closest ? e.target.closest('a[href^="#ref-"], a[href="#references"]') : null;
+    if(!a) return;
+    const d = document.querySelector(".refsDetails");
+    if(d) d.open = true;
+  });
+
+  openRefsIfNeeded();
+</script>
+</body>
+</html>
