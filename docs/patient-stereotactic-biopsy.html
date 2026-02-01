@@ -1,0 +1,436 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Understanding Your Stereotactic Breast Biopsy</title>
+<style>
+  :root{
+    --bg:#0b1020;
+    --panel:#0f1730;
+    --panel2:#121c3a;
+    --text:#eaf0ff;
+    --muted:#b7c2e6;
+    --accent:#7aa2ff;
+    --accent2:#45d483;
+    --border:rgba(255,255,255,.12);
+    --shadow:0 10px 30px rgba(0,0,0,.35);
+    --radius:16px;
+    --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+    --sans: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif;
+  }
+  *{box-sizing:border-box}
+  body{
+    margin:0;
+    font-family:var(--sans);
+    background:radial-gradient(1200px 800px at 20% 10%, rgba(122,162,255,.25), transparent 60%),
+               radial-gradient(900px 700px at 80% 30%, rgba(69,212,131,.15), transparent 60%),
+               var(--bg);
+    color:var(--text);
+    line-height:1.55;
+  }
+  a{color:var(--accent); text-decoration:none}
+  a:hover{text-decoration:underline}
+  header{
+    position:sticky; top:0; z-index:50;
+    background:rgba(11,16,32,.82);
+    backdrop-filter: blur(10px);
+    border-bottom:1px solid var(--border);
+  }
+  .wrap{max-width:1100px; margin:0 auto; padding:16px 18px}
+  .topbar{display:flex; gap:14px; align-items:center; justify-content:space-between;}
+  .brand{display:flex; gap:12px; align-items:center}
+  .logo{
+    width:44px; height:44px; border-radius:14px;
+    background:linear-gradient(135deg, rgba(122,162,255,.9), rgba(69,212,131,.8));
+    box-shadow:var(--shadow);
+  }
+  .title h1{margin:0; font-size:16px; letter-spacing:.2px}
+  .title p{margin:2px 0 0; color:var(--muted); font-size:12px}
+
+  .siteNav{display:flex; gap:8px; align-items:center; flex-wrap:wrap; margin-left:auto}
+  .siteNav a{
+    display:inline-flex; align-items:center; gap:6px;
+    padding:8px 10px;
+    border-radius:999px;
+    border:1px solid var(--border);
+    background:rgba(15,23,48,.6);
+    color:var(--muted);
+    font-size:12px;
+    text-decoration:none;
+    white-space:nowrap
+  }
+  .siteNav a:hover{
+    background:rgba(122,162,255,.12);
+    border-color:rgba(122,162,255,.25);
+    color:var(--text);
+    text-decoration:none
+  }
+  .siteNav a.active{
+    background:rgba(69,212,131,.14);
+    border-color:rgba(69,212,131,.35);
+    color:var(--text)
+  }
+  .siteNav .dot{
+    width:6px; height:6px; border-radius:99px; display:inline-block;
+    background:rgba(69,212,131,.9);
+    box-shadow:0 0 0 3px rgba(69,212,131,.12)
+  }
+
+  .card{
+    border:1px solid var(--border);
+    border-radius:var(--radius);
+    background:rgba(15,23,48,.58);
+    box-shadow:var(--shadow);
+    overflow:hidden;
+  }
+  .card + .card{margin-top:16px}
+  .card .hdr{
+    padding:16px;
+    border-bottom:1px solid var(--border);
+    background:rgba(18,28,58,.55);
+    display:flex; align-items:flex-start; justify-content:space-between; gap:12px;
+  }
+  .card .hdr h2{margin:0; font-size:15px}
+  .card .hdr p{margin:6px 0 0; color:var(--muted); font-size:12px}
+  .card .body{padding:16px; font-size:14px; color:var(--text)}
+  .note{
+    border-left:4px solid rgba(122,162,255,.65);
+    padding:10px 12px;
+    border-radius:12px;
+    background:rgba(122,162,255,.10);
+    color:var(--text);
+    font-size:13px;
+  }
+
+  details{
+    border:1px solid var(--border);
+    border-radius:14px;
+    background:rgba(15,23,48,.45);
+    overflow:hidden;
+  }
+  summary{
+    cursor:pointer;
+    padding:12px 14px;
+    list-style:none;
+    display:flex; align-items:center; justify-content:space-between; gap:10px;
+    background:rgba(18,28,58,.4);
+  }
+  summary::-webkit-details-marker{display:none}
+  summary .sleft{display:flex; flex-direction:column; gap:2px}
+  summary .sleft b{font-size:13px}
+  summary .sleft span{font-size:12px; color:var(--muted)}
+  .detailbody{padding:12px 14px; font-size:13px; color:var(--text)}
+
+  .refs{display:grid; gap:10px;}
+  .ref{
+    border:1px solid var(--border);
+    border-radius:14px;
+    background:rgba(15,23,48,.45);
+    padding:12px 14px;
+  }
+  .ref .rid{font-family:var(--mono); font-size:12px; color:var(--muted)}
+  .ref .rbody{font-size:13px; margin-top:6px}
+
+  sup.cite{font-size:11px; margin-left:2px;}
+  sup.cite a{
+    color:var(--accent);
+    padding:2px 4px;
+    border-radius:8px;
+    border:1px solid rgba(122,162,255,.35);
+    background:rgba(122,162,255,.12);
+    text-decoration:none;
+  }
+  sup.cite a:hover{background:rgba(122,162,255,.18)}
+
+  .grid{display:grid; grid-template-columns:repeat(auto-fit, minmax(260px,1fr)); gap:16px}
+  .tile{
+    border:1px solid var(--border);
+    border-radius:var(--radius);
+    background:rgba(15,23,48,.55);
+    box-shadow:var(--shadow);
+    padding:16px;
+  }
+  .tile h3{margin:0 0 8px}
+  .tile p{margin:0; color:var(--muted); font-size:13px}
+  .badge{
+    display:inline-block;
+    margin-top:12px;
+    padding:6px 10px;
+    border-radius:999px;
+    border:1px solid var(--border);
+    background:rgba(69,212,131,.12);
+    color:var(--text);
+    font-size:12px;
+  }
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap topbar">
+    <div class="brand">
+      <div class="logo" aria-hidden="true"></div>
+      <div class="title">
+        <h1>Understanding Your Stereotactic Breast Biopsy</h1>
+        <p>Stereotactic breast biopsy: what to expect.</p>
+      </div>
+    </div>
+    <div class="siteNav" aria-label="Site navigation">
+      <a href="index.html" title="Home"><span class="dot" aria-hidden="true"></span>Home</a>
+      <a href="breast-pathology-excision-reference.html" title="RadPath">RadPath</a>
+      <a href="patient-info.html" class="active" title="Patient information">Patient info</a>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+
+<article class="card" id="top">
+  <div class="hdr"><div><h2>At a glance</h2><p>Plain-language answers to common questions.</p></div></div>
+  <div class="body"><div class="note"><p>What Is a Stereotactic Breast Biopsy?</p></div></div>
+</article>
+
+<article class="card">
+  <div class="hdr"><div><h2>What Is a Stereotactic Breast Biopsy?</h2></div></div>
+  <div class="body"><p>A stereotactic breast biopsy is a minimally invasive procedure that uses mammography (X-ray imaging) to precisely locate and biopsy an abnormal area in your breast.<sup class="cite"><a href="#ref-1" title="Jump to reference 1">[1]</a></sup><sup class="cite"><a href="#ref-2" title="Jump to reference 2">[2]</a></sup> This method is most commonly used to evaluate calcifications (tiny calcium deposits) or other abnormalities that are visible on mammography but cannot be felt or seen on ultrasound.<sup class="cite"><a href="#ref-1" title="Jump to reference 1">[1]</a></sup><sup class="cite"><a href="#ref-3" title="Jump to reference 3">[3]</a></sup></p><p>Stereotactic biopsy uses computer technology and X-ray images taken from different angles to calculate the exact three-dimensional position of the abnormality, allowing for very precise needle placement.<sup class="cite"><a href="#ref-1" title="Jump to reference 1">[1]</a></sup><sup class="cite"><a href="#ref-2" title="Jump to reference 2">[2]</a></sup></p></div>
+</article>
+
+<article class="card">
+  <div class="hdr"><div><h2>Why Is Stereotactic Guidance Used?</h2></div></div>
+  <div class="body"><p>Stereotactic biopsy is the preferred method when:<sup class="cite"><a href="#ref-1" title="Jump to reference 1">[1]</a></sup><sup class="cite"><a href="#ref-2" title="Jump to reference 2">[2]</a></sup><sup class="cite"><a href="#ref-3" title="Jump to reference 3">[3]</a></sup></p><p>• Calcifications are visible on mammography but not on ultrasound</p><p>• A mass or area of concern is seen on mammography but not visible on ultrasound</p><p>• The abnormality is too small or too deep to feel</p><p>• Precise targeting is needed for accurate diagnosis</p><p>This technique has largely replaced surgical biopsy for diagnosing non-palpable breast abnormalities, offering equal accuracy with less invasiveness, lower cost, and better cosmetic outcomes.<sup class="cite"><a href="#ref-2" title="Jump to reference 2">[2]</a></sup><sup class="cite"><a href="#ref-4" title="Jump to reference 4">[4]</a></sup></p></div>
+</article>
+
+<article class="card">
+  <div class="hdr"><div><h2>You will be positioned in one of two ways</h2></div></div>
+  <div class="body"><p>• Prone (face-down) table: You lie face-down on a special table with your breast positioned through an opening. This is the most common method and helps prevent fainting.</p><p>• Upright unit: You sit in a chair with your breast positioned in the mammography machine.</p></div>
+  </article>
+
+<article class="card">
+  <div class="hdr"><div><h2>Procedure Steps</h2></div></div>
+  <div class="body"><p>1. Breast compression: Your breast will be compressed between two plates, similar to a mammogram, and will remain compressed throughout the procedure</p><p>2. Imaging: X-ray images will be taken from two different angles (usually +15 degrees and -15 degrees from center) to calculate the exact location of the target</p><p>3. Numbing: The skin will be cleaned and numbed with local anesthetic—you may feel a brief sting</p><p>4. Small incision: A tiny nick (about 5 mm) will be made in the skin</p><p>5. Needle insertion: A biopsy needle will be inserted to the calculated depth</p><p>6. Sample collection: Multiple tissue samples will be taken (typically 6-12 cores)<sup class="cite"><a href="#ref-3" title="Jump to reference 3">[3]</a></sup><sup class="cite"><a href="#ref-7" title="Jump to reference 7">[7]</a></sup><sup class="cite"><a href="#ref-8" title="Jump to reference 8">[8]</a></sup></p><p>• For calcifications, each sample will be X-rayed to confirm calcium was retrieved<sup class="cite"><a href="#ref-3" title="Jump to reference 3">[3]</a></sup><sup class="cite"><a href="#ref-6" title="Jump to reference 6">[6]</a></sup></p><p>• You will hear clicking sounds as samples are collected</p><p>7. Marker placement: A small titanium clip will be placed at the biopsy site to mark the location<sup class="cite"><a href="#ref-3" title="Jump to reference 3">[3]</a></sup><sup class="cite"><a href="#ref-5" title="Jump to reference 5">[5]</a></sup></p><p>8. Final imaging: X-rays will confirm the marker is in the correct position</p><p>9. Compression release: The breast compression will be released, and pressure will be applied to stop bleeding</p><p>10. Post-procedure mammogram: You will usually have a mammogram right after the procedure to confirm the marker clip is in the correct location and to document how much of the calcifications were removed<sup class="cite"><a href="#ref-6" title="Jump to reference 6">[6]</a></sup><sup class="cite"><a href="#ref-9" title="Jump to reference 9">[9]</a></sup></p><p>11. Bandaging: A sterile bandage will be applied</p><p>Procedure time: The entire procedure typically takes 30-60 minutes, though the actual biopsy portion is shorter.<sup class="cite"><a href="#ref-4" title="Jump to reference 4">[4]</a></sup></p></div>
+</article>
+
+<article class="card">
+  <div class="hdr"><div><h2>What Types of Needles Are Used?</h2></div></div>
+  <div class="body"><p>Core needle biopsy:<sup class="cite"><a href="#ref-10" title="Jump to reference 10">[10]</a></sup><sup class="cite"><a href="#ref-11" title="Jump to reference 11">[11]</a></sup><sup class="cite"><a href="#ref-12" title="Jump to reference 12">[12]</a></sup></p><p>• Uses a 14-gauge automated needle to collect tissue cores</p><p>• Typically requires at least 5-6 samples for accurate diagnosis</p><p>Vacuum-assisted biopsy (VAB):<sup class="cite"><a href="#ref-11" title="Jump to reference 11">[11]</a></sup><sup class="cite"><a href="#ref-12" title="Jump to reference 12">[12]</a></sup><sup class="cite"><a href="#ref-13" title="Jump to reference 13">[13]</a></sup></p><p>• Uses a larger needle (typically 9-11 gauge) with vacuum suction</p><p>• Removes larger tissue samples through a single insertion</p><p>• Allows collection of more specimens without repositioning the needle</p><p>• Reduces underestimation rates compared to standard core biopsy<sup class="cite"><a href="#ref-11" title="Jump to reference 11">[11]</a></sup><sup class="cite"><a href="#ref-14" title="Jump to reference 14">[14]</a></sup></p><p>• Particularly advantageous for calcifications<sup class="cite"><a href="#ref-11" title="Jump to reference 11">[11]</a></sup><sup class="cite"><a href="#ref-12" title="Jump to reference 12">[12]</a></sup></p><p>Your doctor will determine which type of needle is most appropriate for your specific situation.</p></div>
+</article>
+
+<article class="card">
+  <div class="hdr"><div><h2>What to Expect After Your Biopsy</h2></div></div>
+  <div class="body"><p>Immediately after:<sup class="cite"><a href="#ref-1" title="Jump to reference 1">[1]</a></sup><sup class="cite"><a href="#ref-15" title="Jump to reference 15">[15]</a></sup></p><p>• You can usually go home right away</p><p>• Most patients (95%) resume normal activities within 24 hours<sup class="cite"><a href="#ref-15" title="Jump to reference 15">[15]</a></sup></p><p>• Avoid strenuous activity or heavy lifting for 24-48 hours</p><p>Common side effects:<sup class="cite"><a href="#ref-1" title="Jump to reference 1">[1]</a></sup><sup class="cite"><a href="#ref-15" title="Jump to reference 15">[15]</a></sup><sup class="cite"><a href="#ref-16" title="Jump to reference 16">[16]</a></sup></p><p>• Bruising is very common and may last up to 5 days or longer (occurs in about 71% of patients)<sup class="cite"><a href="#ref-15" title="Jump to reference 15">[15]</a></sup></p><p>• Mild tenderness at the biopsy site</p><p>• Small hematoma (blood collection) may occur but is usually minor<sup class="cite"><a href="#ref-16" title="Jump to reference 16">[16]</a></sup></p></div>
+</article>
+
+<article class="card">
+  <div class="hdr"><div><h2>Pain management</h2></div></div>
+  <div class="body"><p>• Over-the-counter pain medication (such as acetaminophen) is usually sufficient</p><p>• Apply ice packs (wrapped in a towel) to reduce swelling</p><p>• Wear a supportive bra for comfort</p></div>
+</article>
+
+<article class="card">
+  <div class="hdr"><div><h2>When to Call Your Doctor</h2></div></div>
+  <div class="body"><p>Contact your doctor if you experience:<sup class="cite"><a href="#ref-5" title="Jump to reference 5">[5]</a></sup><sup class="cite"><a href="#ref-17" title="Jump to reference 17">[17]</a></sup></p><p>• Fever (temperature above 100.4°F or 38°C)</p><p>• Increasing pain that is not relieved by medication</p><p>• Excessive bleeding or a growing lump at the biopsy site</p><p>• Signs of infection: increasing redness, warmth, or drainage</p></div>
+</article>
+
+<article class="card">
+  <div class="hdr"><div><h2>How Safe Is Stereotactic Biopsy?</h2></div></div>
+  <div class="body"><p>Stereotactic breast biopsy is very safe. In a large study of nearly 5,000 patients:<sup class="cite"><a href="#ref-16" title="Jump to reference 16">[16]</a></sup></p><p>• 96.2% of complications were mild (mostly minor bruising or bleeding)</p><p>• Only 0.3% had clinically significant complications</p><p>• Major complications such as severe hemorrhage or infection are extremely rare (less than 1%)<sup class="cite"><a href="#ref-1" title="Jump to reference 1">[1]</a></sup><sup class="cite"><a href="#ref-5" title="Jump to reference 5">[5]</a></sup></p><p>The procedure does not cause cosmetic deformity because only small amounts of tissue are removed.<sup class="cite"><a href="#ref-1" title="Jump to reference 1">[1]</a></sup></p></div>
+</article>
+
+<article class="card">
+  <div class="hdr"><div><h2>When Will I Get My Results?</h2></div></div>
+  <div class="body"><p>Biopsy results are typically available within 3-7 days. Your doctor will contact you to discuss the findings and recommend next steps.<sup class="cite"><a href="#ref-18" title="Jump to reference 18">[18]</a></sup></p><p>Important note about certain results:<sup class="cite"><a href="#ref-1" title="Jump to reference 1">[1]</a></sup><sup class="cite"><a href="#ref-3" title="Jump to reference 3">[3]</a></sup></p><p>• If your biopsy shows atypical ductal hyperplasia (ADH), your doctor will likely recommend surgical excision, as about 23-50% of these cases are upgraded to cancer at surgery<sup class="cite"><a href="#ref-19" title="Jump to reference 19">[19]</a></sup></p><p>• If your biopsy shows ductal carcinoma in situ (DCIS), surgical excision is recommended, as about 17-28% of cases may have invasive cancer present<sup class="cite"><a href="#ref-19" title="Jump to reference 19">[19]</a></sup><sup class="cite"><a href="#ref-20" title="Jump to reference 20">[20]</a></sup></p><p>• If your biopsy result does not match what was expected based on your mammogram (called a &quot;discordant&quot; result), additional biopsy or surgical excision may be recommended<sup class="cite"><a href="#ref-21" title="Jump to reference 21">[21]</a></sup></p></div>
+</article>
+
+<article class="card">
+  <div class="hdr"><div><h2>How Accurate Is Stereotactic Biopsy?</h2></div></div>
+  <div class="body"><p>Stereotactic breast biopsy is highly accurate:<sup class="cite"><a href="#ref-19" title="Jump to reference 19">[19]</a></sup><sup class="cite"><a href="#ref-21" title="Jump to reference 21">[21]</a></sup><sup class="cite"><a href="#ref-22" title="Jump to reference 22">[22]</a></sup></p><p>• Sensitivity: 91-98% (ability to detect cancer when present)</p><p>• Specificity: 98-100% (ability to correctly identify benign lesions)</p><p>• Overall accuracy: 96-98%</p><p>The accuracy is similar to surgical biopsy but with fewer complications and lower cost.<sup class="cite"><a href="#ref-1" title="Jump to reference 1">[1]</a></sup><sup class="cite"><a href="#ref-22" title="Jump to reference 22">[22]</a></sup> Studies show that women diagnosed with breast cancer by core biopsy are more likely to be treated with a single surgical procedure compared to those initially diagnosed by surgical biopsy.<sup class="cite"><a href="#ref-22" title="Jump to reference 22">[22]</a></sup></p></div>
+</article>
+
+<article class="card">
+  <div class="hdr"><div><h2>Advantages of Stereotactic Biopsy</h2></div></div>
+  <div class="body"><p>Compared to surgical biopsy, stereotactic biopsy offers:<sup class="cite"><a href="#ref-1" title="Jump to reference 1">[1]</a></sup><sup class="cite"><a href="#ref-2" title="Jump to reference 2">[2]</a></sup><sup class="cite"><a href="#ref-4" title="Jump to reference 4">[4]</a></sup><sup class="cite"><a href="#ref-22" title="Jump to reference 22">[22]</a></sup></p><p>• Less invasive with only a small nick in the skin</p><p>• Faster recovery with most patients resuming normal activities within 24 hours</p><p>• Lower cost (approximately one-quarter the cost of surgical biopsy)<sup class="cite"><a href="#ref-23" title="Jump to reference 23">[23]</a></sup></p><p>• No scarring or cosmetic deformity</p><p>• Lower complication rates (less than 1% vs. 2-10% for surgery)<sup class="cite"><a href="#ref-22" title="Jump to reference 22">[22]</a></sup></p><p>• Outpatient procedure performed under local anesthesia</p><p>• Accurate diagnosis allowing for better treatment planning</p></div>
+</article>
+
+<article class="card">
+  <div class="hdr"><div><h2>Who may not be a candidate for stereotactic biopsy:[3][5]</h2></div></div>
+  <div class="body"><p>• Patients with very small breasts that cannot be adequately positioned</p><p>• Lesions very close to the skin or chest wall</p><p>• Lesions in extremely posterior locations</p><p>• Patients with significant bleeding disorders (though most patients on blood thinners can safely undergo the procedure)</p><p>• Patients unable to lie still or cooperate with positioning</p><p>In these cases, your doctor may recommend an alternative biopsy method or surgical biopsy.</p></div>
+</article>
+
+<article class="card">
+  <div class="hdr"><div><h2>Blood-thinning medications</h2></div></div>
+  <div class="body"><p>Most patients can safely continue their blood-thinning medications during stereotactic biopsy, as significant bleeding complications are very rare. However, always inform your doctor about all medications you take, including aspirin, ibuprofen, and supplements.<sup class="cite"><a href="#ref-24" title="Jump to reference 24">[24]</a></sup></p><p>Questions to Ask Before Your Procedure</p></div>
+</article>
+
+<article class="card">
+  <div class="hdr"><div><h2>Follow-Up After Benign Results</h2></div></div>
+  <div class="body"><p>If your biopsy shows benign (non-cancerous) findings that match your mammogram appearance, you will typically:<sup class="cite"><a href="#ref-20" title="Jump to reference 20">[20]</a></sup><sup class="cite"><a href="#ref-25" title="Jump to reference 25">[25]</a></sup></p><p>• Return to regular screening mammography</p><p>• May have follow-up mammograms at 6, 12, and 24 months to ensure stability</p><p>• Continue routine breast cancer screening appropriate for your age and risk factors</p></div>
+</article>
+
+<article class="card">
+  <div class="hdr"><div><h2>Remember</h2></div></div>
+  <div class="body"><p>• Stereotactic breast biopsy is a safe, well-established procedure with very high accuracy</p><p>• The procedure is performed by specially trained radiologists or surgeons<sup class="cite"><a href="#ref-26" title="Jump to reference 26">[26]</a></sup></p><p>• Complications are rare, and most patients experience only minor bruising</p><p>• The procedure provides accurate diagnosis while avoiding the need for surgery in most cases</p><p>• Almost all patients (97%) report they would return for another stereotactic biopsy if needed in the future<sup class="cite"><a href="#ref-15" title="Jump to reference 15">[15]</a></sup></p><p>• Your healthcare team is available to answer any questions or concerns you may have</p></div>
+</article>
+
+
+<article class="card" id="references">
+  <div class="hdr"><div><h2>References</h2><p>Citations in the text link here.</p></div></div>
+  <div class="body">
+    <details class="refsDetails">
+      <summary>
+        <div class="sleft"><b>Show references</b><span>Click to expand/collapse the bibliography</span></div>
+        <span class="badge">Toggle</span>
+      </summary>
+      <div class="detailbody"><div class="refs">
+  <div class="ref" id="ref-1">
+    <div class="rid">[1] <a href="#top" title="Back to top">↑</a></div>
+    <div class="rbody">Stereotactic Breast Biopsy: Indications and Results. Dershaw DD, Liberman L. Oncology (Williston Park, N.Y.). 1998;12(6):907-16; discussion 916, 921-2.</div>
+  </div>
+
+  <div class="ref" id="ref-2">
+    <div class="rid">[2] <a href="#top" title="Back to top">↑</a></div>
+    <div class="rbody">Troubleshooting to Overcome Technical Challenges in Image-Guided Breast Biopsy. Chesebro AL, Chikarmane SA, Ritner JA, Birdwell RL, Giess CS. Radiographics : A Review Publication of the Radiological Society of North America, Inc. 2017 May-Jun;37(3):705-718. doi:10.1148/rg.2017160117.</div>
+  </div>
+
+  <div class="ref" id="ref-3">
+    <div class="rid">[3] <a href="#top" title="Back to top">↑</a></div>
+    <div class="rbody">Standard for the Management of Ductal Carcinoma in Situ of the Breast (DCIS). Morrow M, Strom EA, Bassett LW, et al. CA: A Cancer Journal for Clinicians. 2002;52(5):256-76. doi:10.3322/canjclin.52.5.256.</div>
+  </div>
+
+  <div class="ref" id="ref-4">
+    <div class="rid">[4] <a href="#top" title="Back to top">↑</a></div>
+    <div class="rbody">Stereotactic and Ultrasound-Guided Breast Biopsy. Helbich TH, Matzek W, Fuchsjäger MH. European Radiology. 2004;14(3):383-93. doi:10.1007/s00330-003-2141-z.</div>
+  </div>
+
+  <div class="ref" id="ref-5">
+    <div class="rid">[5] <a href="#top" title="Back to top">↑</a></div>
+    <div class="rbody">The Diagnosis and Management of Ductal Carcinoma in-Situ of the Breast. Winchester DP, Jeske JM, Goldschmidt RA. CA: A Cancer Journal for Clinicians. 2000 May-Jun;50(3):184-200. doi:10.3322/canjclin.50.3.184.</div>
+  </div>
+
+  <div class="ref" id="ref-6">
+    <div class="rid">[6] <a href="#top" title="Back to top">↑</a></div>
+    <div class="rbody">Interdisciplinary Consensus on the Use and Technique of Vacuum-Assisted Stereotactic Breast Biopsy. Heywang-Köbrunner SH, Schreer I, Decker T, Böcker W. European Journal of Radiology. 2003;47(3):232-6. doi:10.1016/s0720-048x(02)00196-1.</div>
+  </div>
+
+  <div class="ref" id="ref-7">
+    <div class="rid">[7] <a href="#top" title="Back to top">↑</a></div>
+    <div class="rbody">Stereotactic 11-Gauge Vacuum-Assisted Breast Biopsy: Influence of Number of Specimens on Diagnostic Accuracy. Lomoschitz FM, Helbich TH, Rudas M, et al. Radiology. 2004;232(3):897-903. doi:10.1148/radiol.2323031224.</div>
+  </div>
+
+  <div class="ref" id="ref-8">
+    <div class="rid">[8] <a href="#top" title="Back to top">↑</a></div>
+    <div class="rbody">Stereotactic 9-Gauge Vacuum-Assisted Breast Biopsy, How Many Specimens Are Needed?. den Dekker BM, van Diest PJ, de Waard SN, Verkooijen HM, Pijnappel RM. European Journal of Radiology. 2019;120:108665. doi:10.1016/j.ejrad.2019.108665.</div>
+  </div>
+
+  <div class="ref" id="ref-9">
+    <div class="rid">[9] <a href="#top" title="Back to top">↑</a></div>
+    <div class="rbody">Mammographic Findings After Stereotactic 14-Gauge Vacuum Biopsy. Liberman L, Hann LE, Dershaw DD, et al. Radiology. 1997;203(2):343-7. doi:10.1148/radiology.203.2.9114086.</div>
+  </div>
+
+  <div class="ref" id="ref-10">
+    <div class="rid">[10] <a href="#top" title="Back to top">↑</a></div>
+    <div class="rbody">Society of surgical oncology medical student &amp;amp; trainee primer for breast surgical oncology. Marissa K. Boyle, Julia M. Selfridge, Rachel E. Sargent, et al.</div>
+  </div>
+
+  <div class="ref" id="ref-11">
+    <div class="rid">[11] <a href="#top" title="Back to top">↑</a></div>
+    <div class="rbody">Vacuum-Assisted Breast Biopsy vs Core Needle Biopsy: A Systematic Review and Meta-Analysis. Sharma N, Theis S, Vogelmann T, Pijnappel R. European Radiology. 2026;:10.1007/s00330-025-12299-1. doi:10.1007/s00330-025-12299-1.</div>
+  </div>
+
+  <div class="ref" id="ref-12">
+    <div class="rid">[12] <a href="#top" title="Back to top">↑</a></div>
+    <div class="rbody">Biopsy Sampling of Breast Lesions: Comparison of Core Needle- And Vacuum-Assisted Breast Biopsies. Lacambra MD, Lam CC, Mendoza P, et al. Breast Cancer Research and Treatment. 2012;132(3):917-23. doi:10.1007/s10549-011-1639-3.</div>
+  </div>
+
+  <div class="ref" id="ref-13">
+    <div class="rid">[13] <a href="#top" title="Back to top">↑</a></div>
+    <div class="rbody">The Evolving Role of Vacuum Assisted Biopsy of the Breast: A Progression From Fine-Needle Aspiration Biopsy. Bennett IC, Saboo A. World Journal of Surgery. 2019;43(4):1054-1061. doi:10.1007/s00268-018-04892-x.</div>
+  </div>
+
+  <div class="ref" id="ref-14">
+    <div class="rid">[14] <a href="#top" title="Back to top">↑</a></div>
+    <div class="rbody">Vacuum-Assisted Breast Biopsy: A Critical Review. Hoorntje LE, Peeters PH, Mali WP, Borel Rinkes IH. European Journal of Cancer (Oxford, England : 1990). 2003;39(12):1676-83. doi:10.1016/s0959-8049(03)00421-0.</div>
+  </div>
+
+  <div class="ref" id="ref-15">
+    <div class="rid">[15] <a href="#top" title="Back to top">↑</a></div>
+    <div class="rbody">Patient Perceptions of Stereotaxic Large-Core Breast Biopsy. Handy RB, Fajardo LL, Innis CA, Witzke DB, Hunter TB. Academic Radiology. 1996;3(12):1007-11. doi:10.1016/s1076-6332(96)80033-x.</div>
+  </div>
+
+  <div class="ref" id="ref-16">
+    <div class="rid">[16] <a href="#top" title="Back to top">↑</a></div>
+    <div class="rbody">Overstated Harms of Breast Cancer Screening? A Large Outcomes Analysis of Complications Associated With 9-Gauge Stereotactic Vacuum-Assisted Breast Biopsy. Lin LLY, Gao Y, Lewin AA, et al. AJR. American Journal of Roentgenology. 2019;212(4):925-932. doi:10.2214/AJR.18.20421.</div>
+  </div>
+
+  <div class="ref" id="ref-17">
+    <div class="rid">[17] <a href="#top" title="Back to top">↑</a></div>
+    <div class="rbody">Breast Biopsy. National Library of Medicine (MedlinePlus).</div>
+  </div>
+
+  <div class="ref" id="ref-18">
+    <div class="rid">[18] <a href="#top" title="Back to top">↑</a></div>
+    <div class="rbody">Breast Cancer Screening and Diagnosis. National Comprehensive Cancer Network. Updated 2025-03-28.</div>
+  </div>
+
+  <div class="ref" id="ref-19">
+    <div class="rid">[19] <a href="#top" title="Back to top">↑</a></div>
+    <div class="rbody">Diagnostic Accuracy of Stereotactic Large-Core Needle Biopsy for Nonpalpable Breast Disease: Results of a Multicenter Prospective Study With 95% Surgical Confirmation. Verkooijen HM. International Journal of Cancer. 2002;99(6):853-9. doi:10.1002/ijc.10419.</div>
+  </div>
+
+  <div class="ref" id="ref-20">
+    <div class="rid">[20] <a href="#top" title="Back to top">↑</a></div>
+    <div class="rbody">Diagnostic Performance of Stereotactic Large Core Needle Biopsy for Nonpalpable Breast Lesions in Routine Clinical Practice. Peters N, Hoorntje L, Mali W, Borel Rinkes I, Peeters P. International Journal of Cancer. 2008;122(2):468-71. doi:10.1002/ijc.23078.</div>
+  </div>
+
+  <div class="ref" id="ref-21">
+    <div class="rid">[21] <a href="#top" title="Back to top">↑</a></div>
+    <div class="rbody">Stereotactic Core-Needle Breast Biopsy: A Multi-Institutional Prospective Trial. Brenner RJ, Bassett LW, Fajardo LL, et al. Radiology. 2001;218(3):866-72. doi:10.1148/radiology.218.3.r01mr44866.</div>
+  </div>
+
+  <div class="ref" id="ref-22">
+    <div class="rid">[22] <a href="#top" title="Back to top">↑</a></div>
+    <div class="rbody">Systematic Review: Comparative Effectiveness of Core-Needle and Open Surgical Biopsy to Diagnose Breast Lesions. Bruening W, Fontanarosa J, Tipton K, et al. Annals of Internal Medicine. 2010;152(4):238-46. doi:10.7326/0003-4819-152-1-201001050-00190.</div>
+  </div>
+
+  <div class="ref" id="ref-23">
+    <div class="rid">[23] <a href="#top" title="Back to top">↑</a></div>
+    <div class="rbody">Open Versus Stereotactic Breast Biopsy. Frazee RC, Roberts JW, Symmonds RE, et al. American Journal of Surgery. 1996;172(5):491-3; discussion 494-5. doi:10.1016/S0002-9610(97)89603-1.</div>
+  </div>
+
+  <div class="ref" id="ref-24">
+    <div class="rid">[24] <a href="#top" title="Back to top">↑</a></div>
+    <div class="rbody">Cancer Yield and Patterns of Follow-Up for BI-RADS Category 3 After Screening Mammography Recall in the National Mammography Database. Berg WA, Berg JM, Sickles EA, et al. Radiology. 2020;296(1):32-41. doi:10.1148/radiol.2020192641.</div>
+  </div>
+
+  <div class="ref" id="ref-25">
+    <div class="rid">[25] <a href="#top" title="Back to top">↑</a></div>
+    <div class="rbody">Evaluation of Stereotactic Core Needle Biopsy (SCNB) of the Breast at a Single Institution. Latosinsky S, Cornell D, Bear HD, et al. Breast Cancer Research and Treatment. 2000;60(3):277-83. doi:10.1023/a:1006449319179.</div>
+  </div>
+
+  <div class="ref" id="ref-26">
+    <div class="rid">[26] <a href="#top" title="Back to top">↑</a></div>
+    <div class="rbody">Optimal Resources for Breast Care. Wendy Austin, Lora Barke, Paul Baron, et al. American College of Surgeons (2025).</div>
+  </div></div></div>
+    </details>
+  </div>
+</article>
+
+</main>
+
+<script>
+function openRefsIfNeeded(){
+  const h=(location.hash||"").toLowerCase();
+  const d=document.querySelector(".refsDetails");
+  if(!d) return;
+  if(h==="#references" || h.startsWith("#ref-")) d.open=true;
+}
+window.addEventListener("hashchange", openRefsIfNeeded);
+document.addEventListener("click",(e)=>{
+  const a=e.target && e.target.closest ? e.target.closest('a[href^="#ref-"], a[href="#references"]') : null;
+  if(!a) return;
+  const d=document.querySelector(".refsDetails");
+  if(d) d.open=true;
+});
+openRefsIfNeeded();
+</script>
+
+</body>
+</html>

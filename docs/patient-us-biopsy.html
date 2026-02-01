@@ -1,0 +1,306 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Understanding Your Ultrasound-Guided Breast Biopsy</title>
+<style>
+  :root{
+    --bg:#0b1020;
+    --panel:#0f1730;
+    --panel2:#121c3a;
+    --text:#eaf0ff;
+    --muted:#b7c2e6;
+    --accent:#7aa2ff;
+    --accent2:#45d483;
+    --border:rgba(255,255,255,.12);
+    --shadow:0 10px 30px rgba(0,0,0,.35);
+    --radius:16px;
+    --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+    --sans: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif;
+  }
+  *{box-sizing:border-box}
+  body{
+    margin:0;
+    font-family:var(--sans);
+    background:radial-gradient(1200px 800px at 20% 10%, rgba(122,162,255,.25), transparent 60%),
+               radial-gradient(900px 700px at 80% 30%, rgba(69,212,131,.15), transparent 60%),
+               var(--bg);
+    color:var(--text);
+    line-height:1.55;
+  }
+  a{color:var(--accent); text-decoration:none}
+  a:hover{text-decoration:underline}
+  header{
+    position:sticky; top:0; z-index:50;
+    background:rgba(11,16,32,.82);
+    backdrop-filter: blur(10px);
+    border-bottom:1px solid var(--border);
+  }
+  .wrap{max-width:1100px; margin:0 auto; padding:16px 18px}
+  .topbar{display:flex; gap:14px; align-items:center; justify-content:space-between;}
+  .brand{display:flex; gap:12px; align-items:center}
+  .logo{
+    width:44px; height:44px; border-radius:14px;
+    background:linear-gradient(135deg, rgba(122,162,255,.9), rgba(69,212,131,.8));
+    box-shadow:var(--shadow);
+  }
+  .title h1{margin:0; font-size:16px; letter-spacing:.2px}
+  .title p{margin:2px 0 0; color:var(--muted); font-size:12px}
+
+  .siteNav{display:flex; gap:8px; align-items:center; flex-wrap:wrap; margin-left:auto}
+  .siteNav a{
+    display:inline-flex; align-items:center; gap:6px;
+    padding:8px 10px;
+    border-radius:999px;
+    border:1px solid var(--border);
+    background:rgba(15,23,48,.6);
+    color:var(--muted);
+    font-size:12px;
+    text-decoration:none;
+    white-space:nowrap
+  }
+  .siteNav a:hover{
+    background:rgba(122,162,255,.12);
+    border-color:rgba(122,162,255,.25);
+    color:var(--text);
+    text-decoration:none
+  }
+  .siteNav a.active{
+    background:rgba(69,212,131,.14);
+    border-color:rgba(69,212,131,.35);
+    color:var(--text)
+  }
+  .siteNav .dot{
+    width:6px; height:6px; border-radius:99px; display:inline-block;
+    background:rgba(69,212,131,.9);
+    box-shadow:0 0 0 3px rgba(69,212,131,.12)
+  }
+
+  .card{
+    border:1px solid var(--border);
+    border-radius:var(--radius);
+    background:rgba(15,23,48,.58);
+    box-shadow:var(--shadow);
+    overflow:hidden;
+  }
+  .card + .card{margin-top:16px}
+  .card .hdr{
+    padding:16px;
+    border-bottom:1px solid var(--border);
+    background:rgba(18,28,58,.55);
+    display:flex; align-items:flex-start; justify-content:space-between; gap:12px;
+  }
+  .card .hdr h2{margin:0; font-size:15px}
+  .card .hdr p{margin:6px 0 0; color:var(--muted); font-size:12px}
+  .card .body{padding:16px; font-size:14px; color:var(--text)}
+  .note{
+    border-left:4px solid rgba(122,162,255,.65);
+    padding:10px 12px;
+    border-radius:12px;
+    background:rgba(122,162,255,.10);
+    color:var(--text);
+    font-size:13px;
+  }
+
+  details{
+    border:1px solid var(--border);
+    border-radius:14px;
+    background:rgba(15,23,48,.45);
+    overflow:hidden;
+  }
+  summary{
+    cursor:pointer;
+    padding:12px 14px;
+    list-style:none;
+    display:flex; align-items:center; justify-content:space-between; gap:10px;
+    background:rgba(18,28,58,.4);
+  }
+  summary::-webkit-details-marker{display:none}
+  summary .sleft{display:flex; flex-direction:column; gap:2px}
+  summary .sleft b{font-size:13px}
+  summary .sleft span{font-size:12px; color:var(--muted)}
+  .detailbody{padding:12px 14px; font-size:13px; color:var(--text)}
+
+  .refs{display:grid; gap:10px;}
+  .ref{
+    border:1px solid var(--border);
+    border-radius:14px;
+    background:rgba(15,23,48,.45);
+    padding:12px 14px;
+  }
+  .ref .rid{font-family:var(--mono); font-size:12px; color:var(--muted)}
+  .ref .rbody{font-size:13px; margin-top:6px}
+
+  sup.cite{font-size:11px; margin-left:2px;}
+  sup.cite a{
+    color:var(--accent);
+    padding:2px 4px;
+    border-radius:8px;
+    border:1px solid rgba(122,162,255,.35);
+    background:rgba(122,162,255,.12);
+    text-decoration:none;
+  }
+  sup.cite a:hover{background:rgba(122,162,255,.18)}
+
+  .grid{display:grid; grid-template-columns:repeat(auto-fit, minmax(260px,1fr)); gap:16px}
+  .tile{
+    border:1px solid var(--border);
+    border-radius:var(--radius);
+    background:rgba(15,23,48,.55);
+    box-shadow:var(--shadow);
+    padding:16px;
+  }
+  .tile h3{margin:0 0 8px}
+  .tile p{margin:0; color:var(--muted); font-size:13px}
+  .badge{
+    display:inline-block;
+    margin-top:12px;
+    padding:6px 10px;
+    border-radius:999px;
+    border:1px solid var(--border);
+    background:rgba(69,212,131,.12);
+    color:var(--text);
+    font-size:12px;
+  }
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap topbar">
+    <div class="brand">
+      <div class="logo" aria-hidden="true"></div>
+      <div class="title">
+        <h1>Understanding Your Ultrasound-Guided Breast Biopsy</h1>
+        <p>Ultrasound-guided breast biopsy: what to expect.</p>
+      </div>
+    </div>
+    <div class="siteNav" aria-label="Site navigation">
+      <a href="index.html" title="Home"><span class="dot" aria-hidden="true"></span>Home</a>
+      <a href="breast-pathology-excision-reference.html" title="RadPath">RadPath</a>
+      <a href="patient-info.html" class="active" title="Patient information">Patient info</a>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+
+<article class="card" id="top">
+  <div class="hdr"><div><h2>At a glance</h2><p>Plain-language answers to common questions.</p></div></div>
+  <div class="body"><div class="note"><p>What Is an Ultrasound-Guided Breast Biopsy?</p></div></div>
+</article>
+
+<article class="card">
+  <div class="hdr"><div><h2>What Is an Ultrasound-Guided Breast Biopsy?</h2></div></div>
+  <div class="body"><p>An ultrasound-guided breast biopsy is a minimally invasive procedure that uses ultrasound imaging (sound waves) to guide a needle to a specific area in your breast to remove small tissue samples for testing.<sup class="cite"><a href="#ref-1" title="Jump to reference 1">[1]</a></sup><sup class="cite"><a href="#ref-2" title="Jump to reference 2">[2]</a></sup> This procedure is performed when a suspicious finding is visible on ultrasound imaging.</p><p>Ultrasound-guided biopsy is the preferred method for evaluating masses (lumps) that can be seen on ultrasound because it allows your doctor to watch the needle in real-time as it enters the breast tissue.<sup class="cite"><a href="#ref-3" title="Jump to reference 3">[3]</a></sup><sup class="cite"><a href="#ref-4" title="Jump to reference 4">[4]</a></sup></p></div>
+</article>
+
+<article class="card">
+  <div class="hdr"><div><h2>Why Ultrasound Guidance?</h2></div></div>
+  <div class="body"><p>Ultrasound guidance offers several advantages:<sup class="cite"><a href="#ref-3" title="Jump to reference 3">[3]</a></sup><sup class="cite"><a href="#ref-4" title="Jump to reference 4">[4]</a></sup></p><p>• Real-time visualization: Your doctor can see the needle and the target area continuously during the procedure</p><p>• No radiation exposure: Unlike mammography, ultrasound uses sound waves, not X-rays</p><p>• Comfortable positioning: You typically lie on your back or side, rather than having your breast compressed</p><p>• Accessibility: Can reach areas that may be difficult to access with other methods</p><p>• Shorter procedure time: Usually takes 15-30 minutes</p></div>
+</article>
+
+<article class="card">
+  <div class="hdr"><div><h2>What Happens During the Procedure?</h2></div></div>
+  <div class="body"><p>Before the biopsy:<sup class="cite"><a href="#ref-1" title="Jump to reference 1">[1]</a></sup><sup class="cite"><a href="#ref-3" title="Jump to reference 3">[3]</a></sup></p><p>• You will lie on your back or side on an examination table</p><p>• The radiologist will use ultrasound to locate the area of concern</p><p>• The skin over the biopsy site will be cleaned with an antiseptic solution</p><p>• A local anesthetic (numbing medicine) will be injected into the area—you may feel a brief sting or pinch</p><p>During the biopsy:<sup class="cite"><a href="#ref-1" title="Jump to reference 1">[1]</a></sup><sup class="cite"><a href="#ref-2" title="Jump to reference 2">[2]</a></sup><sup class="cite"><a href="#ref-3" title="Jump to reference 3">[3]</a></sup></p><p>• Once the area is numb, a small nick (about 3-5 mm) may be made in the skin</p><p>• The doctor will insert a core biopsy needle (typically 14-gauge) into your breast while watching on the ultrasound screen</p><p>• You may feel pressure but should not feel sharp pain</p><p>• Multiple tissue samples (usually 3-6 cores) will be taken to ensure adequate sampling<sup class="cite"><a href="#ref-2" title="Jump to reference 2">[2]</a></sup><sup class="cite"><a href="#ref-3" title="Jump to reference 3">[3]</a></sup></p><p>• A small titanium marker clip will be placed at the biopsy site to mark the location for future reference<sup class="cite"><a href="#ref-2" title="Jump to reference 2">[2]</a></sup></p><p>• The doctor will use ultrasound to confirm the marker is in the correct position</p><p>After sample collection:<sup class="cite"><a href="#ref-1" title="Jump to reference 1">[1]</a></sup></p><p>• Pressure will be applied to the biopsy site to stop any bleeding</p><p>• The area will be covered with a sterile bandage</p><p>• No stitches are typically needed</p><p>• You will usually have a mammogram right after the procedure to document the location of the marker clip for future reference<sup class="cite"><a href="#ref-5" title="Jump to reference 5">[5]</a></sup></p><p>• The entire procedure usually takes 15-30 minutes</p></div>
+</article>
+
+<article class="card">
+  <div class="hdr"><div><h2>Immediately after</h2></div></div>
+  <div class="body"><p>• You can usually go home right away and resume most normal activities within 24 hours<sup class="cite"><a href="#ref-3" title="Jump to reference 3">[3]</a></sup></p><p>• Avoid strenuous activity or heavy lifting for 24-48 hours</p><p>• Keep the biopsy site clean and dry for 24 hours</p><p>Common side effects:<sup class="cite"><a href="#ref-3" title="Jump to reference 3">[3]</a></sup><sup class="cite"><a href="#ref-6" title="Jump to reference 6">[6]</a></sup></p><p>• Bruising and tenderness are normal and may last several days to a week</p><p>• Mild swelling at the biopsy site</p><p>• Minor bleeding or spotting on your bandage</p></div>
+</article>
+
+<article class="card">
+  <div class="hdr"><div><h2>Pain management</h2></div></div>
+  <div class="body"><p>• Over-the-counter pain relievers (such as acetaminophen) are usually sufficient</p><p>• Apply ice packs (wrapped in a towel) for 15-20 minutes at a time to reduce swelling</p><p>• Wear a supportive bra for comfort</p></div>
+</article>
+
+<article class="card">
+  <div class="hdr"><div><h2>When to Call Your Doctor</h2></div></div>
+  <div class="body"><p>Contact your doctor if you experience:<sup class="cite"><a href="#ref-3" title="Jump to reference 3">[3]</a></sup></p><p>• Fever (temperature above 100.4°F or 38°C)</p><p>• Increasing pain that is not relieved by over-the-counter medication</p><p>• Excessive bleeding that soaks through your bandage</p><p>• Signs of infection: increasing redness, warmth, or pus at the biopsy site</p><p>• A large, firm lump at the biopsy site that continues to grow</p></div>
+</article>
+
+<article class="card">
+  <div class="hdr"><div><h2>When Will I Get My Results?</h2></div></div>
+  <div class="body"><p>Biopsy results are typically available within 3-7 days.<sup class="cite"><a href="#ref-1" title="Jump to reference 1">[1]</a></sup> Your doctor will contact you to discuss the results and next steps. If the results show cancer, you will be referred to a breast cancer specialist. If the results are benign (not cancer), your doctor will discuss the appropriate follow-up plan.<sup class="cite"><a href="#ref-3" title="Jump to reference 3">[3]</a></sup></p></div>
+</article>
+
+<article class="card">
+  <div class="hdr"><div><h2>Important Information About Medications</h2></div></div>
+  <div class="body"><p>Blood thinners:<sup class="cite"><a href="#ref-1" title="Jump to reference 1">[1]</a></sup></p><p>Recent studies show that most patients can safely continue their blood-thinning medications during breast biopsy, as clinically significant bleeding complications are very rare (less than 0.5%).<sup class="cite"><a href="#ref-1" title="Jump to reference 1">[1]</a></sup> However, you should:</p><p>• Tell your doctor about ALL medications you take, including aspirin, ibuprofen, and supplements</p><p>• Follow your doctor&#x27;s specific instructions about which medications to continue or stop</p><p>• Never stop taking prescribed blood thinners without talking to your doctor first</p></div>
+</article>
+
+<article class="card">
+  <div class="hdr"><div><h2>How Accurate Is Ultrasound-Guided Biopsy?</h2></div></div>
+  <div class="body"><p>Ultrasound-guided core needle biopsy is highly accurate, with success rates exceeding 99% when performed by experienced radiologists.<sup class="cite"><a href="#ref-2" title="Jump to reference 2">[2]</a></sup> The procedure has been shown to be as accurate as surgical biopsy while being less invasive, less expensive, and causing minimal scarring.<sup class="cite"><a href="#ref-3" title="Jump to reference 3">[3]</a></sup><sup class="cite"><a href="#ref-4" title="Jump to reference 4">[4]</a></sup></p><p>Questions to Ask Before Your Procedure</p></div>
+</article>
+
+<article class="card">
+  <div class="hdr"><div><h2>Remember</h2></div></div>
+  <div class="body"><p>• Ultrasound-guided breast biopsy is a safe, well-established procedure with very low complication rates</p><p>• Most patients experience only minor bruising and tenderness</p><p>• The procedure provides accurate diagnosis while avoiding the need for surgery in most cases</p><p>• Your healthcare team is available to answer any questions or concerns you may have</p></div>
+</article>
+
+
+<article class="card" id="references">
+  <div class="hdr"><div><h2>References</h2><p>Citations in the text link here.</p></div></div>
+  <div class="body">
+    <details class="refsDetails">
+      <summary>
+        <div class="sleft"><b>Show references</b><span>Click to expand/collapse the bibliography</span></div>
+        <span class="badge">Toggle</span>
+      </summary>
+      <div class="detailbody"><div class="refs">
+  <div class="ref" id="ref-1">
+    <div class="rid">[1] <a href="#top" title="Back to top">↑</a></div>
+    <div class="rbody">Cancer Yield and Patterns of Follow-Up for BI-RADS Category 3 After Screening Mammography Recall in the National Mammography Database. Berg WA, Berg JM, Sickles EA, et al. Radiology. 2020;296(1):32-41. doi:10.1148/radiol.2020192641.</div>
+  </div>
+
+  <div class="ref" id="ref-2">
+    <div class="rid">[2] <a href="#top" title="Back to top">↑</a></div>
+    <div class="rbody">Outcome of Imaging and Biopsy of BI-RADS Category 3 Lesions: Follow-Up Compliance, Biopsy, and Malignancy Rates in a Large Patient Cohort. Polat DS, Merchant K, Hayes J, et al. Journal of Ultrasound in Medicine : Official Journal of the American Institute of Ultrasound in Medicine. 2023;42(6):1285-1296. doi:10.1002/jum.16142.</div>
+  </div>
+
+  <div class="ref" id="ref-3">
+    <div class="rid">[3] <a href="#top" title="Back to top">↑</a></div>
+    <div class="rbody">Breast Cancer Screening and Diagnosis. National Comprehensive Cancer Network. Updated 2025-03-28.</div>
+  </div>
+
+  <div class="ref" id="ref-4">
+    <div class="rid">[4] <a href="#top" title="Back to top">↑</a></div>
+    <div class="rbody">ACR BI-RADS Assessment Category 4 Subdivisions in Diagnostic Mammography: Utilization and Outcomes in the National Mammography Database. Elezaby M, Li G, Bhargavan-Chatfield M, Burnside ES, DeMartini WB. Radiology. 2018;287(2):416-422. doi:10.1148/radiol.2017170770.</div>
+  </div>
+
+  <div class="ref" id="ref-5">
+    <div class="rid">[5] <a href="#top" title="Back to top">↑</a></div>
+    <div class="rbody">A Plea for the Biopsy Marker: How, Why and Why Not Clipping After Breast Biopsy?. Thomassin-Naggara I, Lalonde L, David J, et al. Breast Cancer Research and Treatment. 2012;132(3):881-93. doi:10.1007/s10549-011-1847-x.</div>
+  </div>
+
+  <div class="ref" id="ref-6">
+    <div class="rid">[6] <a href="#top" title="Back to top">↑</a></div>
+    <div class="rbody">Society of surgical oncology medical student &amp;amp; trainee primer for breast surgical oncology. Marissa K. Boyle, Julia M. Selfridge, Rachel E. Sargent, et al.</div>
+  </div></div></div>
+    </details>
+  </div>
+</article>
+
+</main>
+
+<script>
+function openRefsIfNeeded(){
+  const h=(location.hash||"").toLowerCase();
+  const d=document.querySelector(".refsDetails");
+  if(!d) return;
+  if(h==="#references" || h.startsWith("#ref-")) d.open=true;
+}
+window.addEventListener("hashchange", openRefsIfNeeded);
+document.addEventListener("click",(e)=>{
+  const a=e.target && e.target.closest ? e.target.closest('a[href^="#ref-"], a[href="#references"]') : null;
+  if(!a) return;
+  const d=document.querySelector(".refsDetails");
+  if(d) d.open=true;
+});
+openRefsIfNeeded();
+</script>
+
+</body>
+</html>

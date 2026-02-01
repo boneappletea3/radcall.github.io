@@ -1,0 +1,306 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Understanding Your BI-RADS 4 (Suspicious) Finding</title>
+<style>
+  :root{
+    --bg:#0b1020;
+    --panel:#0f1730;
+    --panel2:#121c3a;
+    --text:#eaf0ff;
+    --muted:#b7c2e6;
+    --accent:#7aa2ff;
+    --accent2:#45d483;
+    --border:rgba(255,255,255,.12);
+    --shadow:0 10px 30px rgba(0,0,0,.35);
+    --radius:16px;
+    --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+    --sans: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif;
+  }
+  *{box-sizing:border-box}
+  body{
+    margin:0;
+    font-family:var(--sans);
+    background:radial-gradient(1200px 800px at 20% 10%, rgba(122,162,255,.25), transparent 60%),
+               radial-gradient(900px 700px at 80% 30%, rgba(69,212,131,.15), transparent 60%),
+               var(--bg);
+    color:var(--text);
+    line-height:1.55;
+  }
+  a{color:var(--accent); text-decoration:none}
+  a:hover{text-decoration:underline}
+  header{
+    position:sticky; top:0; z-index:50;
+    background:rgba(11,16,32,.82);
+    backdrop-filter: blur(10px);
+    border-bottom:1px solid var(--border);
+  }
+  .wrap{max-width:1100px; margin:0 auto; padding:16px 18px}
+  .topbar{display:flex; gap:14px; align-items:center; justify-content:space-between;}
+  .brand{display:flex; gap:12px; align-items:center}
+  .logo{
+    width:44px; height:44px; border-radius:14px;
+    background:linear-gradient(135deg, rgba(122,162,255,.9), rgba(69,212,131,.8));
+    box-shadow:var(--shadow);
+  }
+  .title h1{margin:0; font-size:16px; letter-spacing:.2px}
+  .title p{margin:2px 0 0; color:var(--muted); font-size:12px}
+
+  .siteNav{display:flex; gap:8px; align-items:center; flex-wrap:wrap; margin-left:auto}
+  .siteNav a{
+    display:inline-flex; align-items:center; gap:6px;
+    padding:8px 10px;
+    border-radius:999px;
+    border:1px solid var(--border);
+    background:rgba(15,23,48,.6);
+    color:var(--muted);
+    font-size:12px;
+    text-decoration:none;
+    white-space:nowrap
+  }
+  .siteNav a:hover{
+    background:rgba(122,162,255,.12);
+    border-color:rgba(122,162,255,.25);
+    color:var(--text);
+    text-decoration:none
+  }
+  .siteNav a.active{
+    background:rgba(69,212,131,.14);
+    border-color:rgba(69,212,131,.35);
+    color:var(--text)
+  }
+  .siteNav .dot{
+    width:6px; height:6px; border-radius:99px; display:inline-block;
+    background:rgba(69,212,131,.9);
+    box-shadow:0 0 0 3px rgba(69,212,131,.12)
+  }
+
+  .card{
+    border:1px solid var(--border);
+    border-radius:var(--radius);
+    background:rgba(15,23,48,.58);
+    box-shadow:var(--shadow);
+    overflow:hidden;
+  }
+  .card + .card{margin-top:16px}
+  .card .hdr{
+    padding:16px;
+    border-bottom:1px solid var(--border);
+    background:rgba(18,28,58,.55);
+    display:flex; align-items:flex-start; justify-content:space-between; gap:12px;
+  }
+  .card .hdr h2{margin:0; font-size:15px}
+  .card .hdr p{margin:6px 0 0; color:var(--muted); font-size:12px}
+  .card .body{padding:16px; font-size:14px; color:var(--text)}
+  .note{
+    border-left:4px solid rgba(122,162,255,.65);
+    padding:10px 12px;
+    border-radius:12px;
+    background:rgba(122,162,255,.10);
+    color:var(--text);
+    font-size:13px;
+  }
+
+  details{
+    border:1px solid var(--border);
+    border-radius:14px;
+    background:rgba(15,23,48,.45);
+    overflow:hidden;
+  }
+  summary{
+    cursor:pointer;
+    padding:12px 14px;
+    list-style:none;
+    display:flex; align-items:center; justify-content:space-between; gap:10px;
+    background:rgba(18,28,58,.4);
+  }
+  summary::-webkit-details-marker{display:none}
+  summary .sleft{display:flex; flex-direction:column; gap:2px}
+  summary .sleft b{font-size:13px}
+  summary .sleft span{font-size:12px; color:var(--muted)}
+  .detailbody{padding:12px 14px; font-size:13px; color:var(--text)}
+
+  .refs{display:grid; gap:10px;}
+  .ref{
+    border:1px solid var(--border);
+    border-radius:14px;
+    background:rgba(15,23,48,.45);
+    padding:12px 14px;
+  }
+  .ref .rid{font-family:var(--mono); font-size:12px; color:var(--muted)}
+  .ref .rbody{font-size:13px; margin-top:6px}
+
+  sup.cite{font-size:11px; margin-left:2px;}
+  sup.cite a{
+    color:var(--accent);
+    padding:2px 4px;
+    border-radius:8px;
+    border:1px solid rgba(122,162,255,.35);
+    background:rgba(122,162,255,.12);
+    text-decoration:none;
+  }
+  sup.cite a:hover{background:rgba(122,162,255,.18)}
+
+  .grid{display:grid; grid-template-columns:repeat(auto-fit, minmax(260px,1fr)); gap:16px}
+  .tile{
+    border:1px solid var(--border);
+    border-radius:var(--radius);
+    background:rgba(15,23,48,.55);
+    box-shadow:var(--shadow);
+    padding:16px;
+  }
+  .tile h3{margin:0 0 8px}
+  .tile p{margin:0; color:var(--muted); font-size:13px}
+  .badge{
+    display:inline-block;
+    margin-top:12px;
+    padding:6px 10px;
+    border-radius:999px;
+    border:1px solid var(--border);
+    background:rgba(69,212,131,.12);
+    color:var(--text);
+    font-size:12px;
+  }
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap topbar">
+    <div class="brand">
+      <div class="logo" aria-hidden="true"></div>
+      <div class="title">
+        <h1>Understanding Your BI-RADS 4 (Suspicious) Finding</h1>
+        <p>BI-RADS 4: suspicious findings and next steps.</p>
+      </div>
+    </div>
+    <div class="siteNav" aria-label="Site navigation">
+      <a href="index.html" title="Home"><span class="dot" aria-hidden="true"></span>Home</a>
+      <a href="breast-pathology-excision-reference.html" title="RadPath">RadPath</a>
+      <a href="patient-info.html" class="active" title="Patient information">Patient info</a>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+
+<article class="card" id="top">
+  <div class="hdr"><div><h2>At a glance</h2><p>Plain-language answers to common questions.</p></div></div>
+  <div class="body"><div class="note"><p>What Does BI-RADS 4 Mean?</p></div></div>
+</article>
+
+<article class="card">
+  <div class="hdr"><div><h2>What Does BI-RADS 4 Mean?</h2></div></div>
+  <div class="body"><p>Your recent breast imaging showed a finding that has been classified as BI-RADS 4, which means &quot;suspicious.&quot; This category is used by radiologists to describe findings that do not have the classic appearance of cancer but are concerning enough that your doctor recommends a biopsy to determine whether the finding is benign (not cancer) or malignant (cancer).<sup class="cite"><a href="#ref-1" title="Jump to reference 1">[1]</a></sup></p><p>BI-RADS 4 findings have a wide range of cancer risk—anywhere from about 2% to 95%—which is why your radiologist may have further classified your finding into a subcategory (4A, 4B, or 4C) to give you and your doctor more specific information about the level of concern.<sup class="cite"><a href="#ref-1" title="Jump to reference 1">[1]</a></sup></p></div>
+</article>
+
+<article class="card">
+  <div class="hdr"><div><h2>What Are the BI-RADS 4 Subcategories?</h2></div></div>
+  <div class="body"><p>Your finding may be classified into one of three subcategories based on how suspicious it appears:<sup class="cite"><a href="#ref-1" title="Jump to reference 1">[1]</a></sup><sup class="cite"><a href="#ref-2" title="Jump to reference 2">[2]</a></sup></p></div>
+</article>
+
+<article class="card">
+  <div class="hdr"><div><h2>BI-RADS 4A (Low Suspicion)</h2></div></div>
+  <div class="body"><p>• Cancer risk: 2-10%</p><p>• This means there is a low likelihood of cancer, but a biopsy is still recommended to be certain</p><p>• Studies show the actual cancer rate is around 7-8%<sup class="cite"><a href="#ref-3" title="Jump to reference 3">[3]</a></sup></p></div>
+</article>
+
+<article class="card">
+  <div class="hdr"><div><h2>BI-RADS 4B (Moderate Suspicion)</h2></div></div>
+  <div class="body"><p>• Cancer risk: 10-50%</p><p>• This indicates an intermediate level of concern</p><p>• Studies show the actual cancer rate is around 22-28%<sup class="cite"><a href="#ref-3" title="Jump to reference 3">[3]</a></sup></p></div>
+</article>
+
+<article class="card">
+  <div class="hdr"><div><h2>BI-RADS 4C (High Suspicion)</h2></div></div>
+  <div class="body"><p>• Cancer risk: 50-95%</p><p>• This indicates a high level of concern, though it is not quite as certain as BI-RADS 5</p><p>• Studies show the actual cancer rate is around 69-83%<sup class="cite"><a href="#ref-3" title="Jump to reference 3">[3]</a></sup></p></div>
+</article>
+
+<article class="card">
+  <div class="hdr"><div><h2>What Types of Findings Are Classified as BI-RADS 4?</h2></div></div>
+  <div class="body"><p>BI-RADS 4 findings can include various abnormalities seen on mammography, ultrasound, or MRI, such as:</p><p>• A mass with irregular borders or other concerning features</p><p>• Certain patterns of calcifications (tiny calcium deposits)</p><p>• Areas of architectural distortion (abnormal tissue arrangement)</p><p>• Asymmetries that appear suspicious</p><p>• Other findings that don&#x27;t look clearly benign</p></div>
+</article>
+
+<article class="card">
+  <div class="hdr"><div><h2>What Happens Next?</h2></div></div>
+  <div class="body"><p>A biopsy is recommended for all BI-RADS 4 findings. This is the only way to know for certain whether the finding is benign or malignant.<sup class="cite"><a href="#ref-1" title="Jump to reference 1">[1]</a></sup> The most common type of biopsy is a core needle biopsy, which is an outpatient procedure performed using image guidance (mammography, ultrasound, or MRI).<sup class="cite"><a href="#ref-1" title="Jump to reference 1">[1]</a></sup></p></div>
+</article>
+
+<article class="card">
+  <div class="hdr"><div><h2>During a core needle biopsy</h2></div></div>
+  <div class="body"><p>• The area is numbed with local anesthesia</p><p>• A small needle is used to remove tiny samples of tissue</p><p>• The procedure typically takes 30-60 minutes</p><p>• You can usually return to normal activities within a day or two</p><p>• Results are typically available within 3-7 days</p></div>
+</article>
+
+<article class="card">
+  <div class="hdr"><div><h2>If the biopsy shows benign (non-cancerous) tissue</h2></div></div>
+  <div class="body"><p>• You will typically return to routine screening mammograms</p><p>• In some cases, your doctor may recommend follow-up imaging at 6-12 months to ensure stability</p><p>• Certain benign findings (such as atypical hyperplasia) may require surgical removal or closer monitoring<sup class="cite"><a href="#ref-1" title="Jump to reference 1">[1]</a></sup></p></div>
+</article>
+
+<article class="card">
+  <div class="hdr"><div><h2>If the biopsy shows cancer</h2></div></div>
+  <div class="body"><p>• Your doctor will discuss treatment options with you</p><p>• You will be referred to a breast cancer specialist</p><p>• Modern treatment options are highly effective, especially when cancer is detected early</p></div>
+</article>
+
+<article class="card">
+  <div class="hdr"><div><h2>Important Points to Remember</h2></div></div>
+  <div class="body"><p>• A BI-RADS 4 finding does NOT mean you have cancer—it means a biopsy is needed to find out</p><p>• Most BI-RADS 4 findings turn out to be benign—overall, about 79% of BI-RADS 4 biopsies show benign results<sup class="cite"><a href="#ref-3" title="Jump to reference 3">[3]</a></sup></p><p>• The biopsy is important even if the cancer risk seems low—it is the only way to know for certain</p><p>• Early detection saves lives—if cancer is found, detecting it early greatly improves treatment outcomes</p></div>
+</article>
+
+<article class="card">
+  <div class="hdr"><div><h2>What Should I Do Now?</h2></div></div>
+  <div class="body"><p>• Schedule your biopsy as soon as possible—do not delay this important test</p><p>• Bring a support person to your biopsy appointment if it would help you feel more comfortable</p><p>• Ask questions—your healthcare team is here to help you understand your results and next steps</p><p>• Try to stay calm—remember that most biopsies show benign results, and if cancer is found, early detection offers the best outcomes</p></div>
+</article>
+
+<article class="card">
+  <div class="hdr"><div><h2>It is normal to feel anxious while waiting for biopsy results. Consider</h2></div></div>
+  <div class="body"><p>• Talking with family, friends, or a counselor</p><p>• Contacting a breast cancer support organization</p><p>• Writing down your questions before appointments</p><p>• Focusing on things you can control, such as maintaining healthy habits</p><p>Remember, your healthcare team is here to support you through this process and answer any questions you may have.</p></div>
+</article>
+
+
+<article class="card" id="references">
+  <div class="hdr"><div><h2>References</h2><p>Citations in the text link here.</p></div></div>
+  <div class="body">
+    <details class="refsDetails">
+      <summary>
+        <div class="sleft"><b>Show references</b><span>Click to expand/collapse the bibliography</span></div>
+        <span class="badge">Toggle</span>
+      </summary>
+      <div class="detailbody"><div class="refs">
+  <div class="ref" id="ref-1">
+    <div class="rid">[1] <a href="#top" title="Back to top">↑</a></div>
+    <div class="rbody">Breast Cancer Screening and Diagnosis. National Comprehensive Cancer Network. Updated 2025-03-28.</div>
+  </div>
+
+  <div class="ref" id="ref-2">
+    <div class="rid">[2] <a href="#top" title="Back to top">↑</a></div>
+    <div class="rbody">Society of surgical oncology medical student &amp;amp; trainee primer for breast surgical oncology. Marissa K. Boyle, Julia M. Selfridge, Rachel E. Sargent, et al.</div>
+  </div>
+
+  <div class="ref" id="ref-3">
+    <div class="rid">[3] <a href="#top" title="Back to top">↑</a></div>
+    <div class="rbody">ACR BI-RADS Assessment Category 4 Subdivisions in Diagnostic Mammography: Utilization and Outcomes in the National Mammography Database. Elezaby M, Li G, Bhargavan-Chatfield M, Burnside ES, DeMartini WB. Radiology. 2018;287(2):416-422. doi:10.1148/radiol.2017170770.</div>
+  </div></div></div>
+    </details>
+  </div>
+</article>
+
+</main>
+
+<script>
+function openRefsIfNeeded(){
+  const h=(location.hash||"").toLowerCase();
+  const d=document.querySelector(".refsDetails");
+  if(!d) return;
+  if(h==="#references" || h.startsWith("#ref-")) d.open=true;
+}
+window.addEventListener("hashchange", openRefsIfNeeded);
+document.addEventListener("click",(e)=>{
+  const a=e.target && e.target.closest ? e.target.closest('a[href^="#ref-"], a[href="#references"]') : null;
+  if(!a) return;
+  const d=document.querySelector(".refsDetails");
+  if(d) d.open=true;
+});
+openRefsIfNeeded();
+</script>
+
+</body>
+</html>
