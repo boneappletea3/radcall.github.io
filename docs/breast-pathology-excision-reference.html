@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1"/>
-<title>Breast Pathology Quick Reference: Excision vs Observation</title>
+<title>RadPath Assistant</title>
 <style>
   :root{
     --bg:#0b1020;
@@ -32,25 +32,7 @@
     line-height:1.45;
   }
   a{color:var(--accent); text-decoration:none}
-  
-a:hover{text-decoration:underline}
-
-/* ===== Breadcrumbs (site-wide) ===== */
-.breadcrumbs{
-  display:flex; gap:10px; align-items:center; flex-wrap:wrap;
-  margin-left:8px;
-  padding:8px 12px;
-  border-radius:999px;
-  border:1px solid var(--border);
-  background:rgba(15,23,48,.55);
-  color:var(--muted);
-  font-size:12px;
-  white-space:nowrap;
-}
-.breadcrumbs a{color:var(--accent); text-decoration:none}
-.breadcrumbs a:hover{text-decoration:underline}
-.breadcrumbs .sep{opacity:.65}
-.breadcrumbs .current{color:var(--text); font-weight:600}
+  a:hover{text-decoration:underline}
 
   header{
     position:sticky; top:0; z-index:50;
@@ -71,10 +53,39 @@ a:hover{text-decoration:underline}
   .title{display:flex; flex-direction:column}
   .title h1{margin:0; font-size:16px; letter-spacing:.2px}
   .title p{margin:2px 0 0; color:var(--muted); font-size:12px}
-  .controls{display:flex; gap:10px; align-items:center; flex-wrap:wrap; justify-content:flex-end}
-  .search{
-    position:relative; min-width:260px; flex: 1 1 260px;
+
+  /* Site-wide navigation pills */
+  .siteNav{display:flex; gap:8px; align-items:center; flex-wrap:wrap; margin-left:auto}
+  .siteNav a{
+    display:inline-flex; align-items:center; gap:6px;
+    padding:8px 10px;
+    border-radius:999px;
+    border:1px solid var(--border);
+    background:rgba(15,23,48,.6);
+    color:var(--muted);
+    font-size:12px;
+    text-decoration:none;
+    white-space:nowrap
   }
+  .siteNav a:hover{
+    background:rgba(122,162,255,.12);
+    border-color:rgba(122,162,255,.25);
+    color:var(--text);
+    text-decoration:none
+  }
+  .siteNav a.active{
+    background:rgba(69,212,131,.14);
+    border-color:rgba(69,212,131,.35);
+    color:var(--text)
+  }
+  .siteNav .dot{
+    width:6px; height:6px; border-radius:99px; display:inline-block;
+    background:rgba(69,212,131,.9);
+    box-shadow:0 0 0 3px rgba(69,212,131,.12)
+  }
+
+  .controls{display:flex; gap:10px; align-items:center; flex-wrap:wrap; justify-content:flex-end}
+  .search{position:relative; min-width:260px; flex: 1 1 260px;}
   .search input{
     width:100%;
     padding:10px 12px 10px 36px;
@@ -97,9 +108,10 @@ a:hover{text-decoration:underline}
     user-select:none;
   }
   .chip.active{background:rgba(122,162,255,.2); color:var(--text); border-color:rgba(122,162,255,.45)}
+
   main{display:grid; grid-template-columns: 280px 1fr; gap:18px; padding:18px}
   nav{
-    position:sticky; top:86px;
+    position:sticky; top:92px;
     align-self:start;
     border:1px solid var(--border);
     border-radius:var(--radius);
@@ -107,13 +119,6 @@ a:hover{text-decoration:underline}
     box-shadow:var(--shadow);
     overflow:hidden;
   }
-  nav .navhdr{
-    padding:14px 14px 10px;
-    border-bottom:1px solid var(--border);
-    background:rgba(18,28,58,.5);
-  }
-  nav .navhdr .kicker{font-size:11px; letter-spacing:.12em; text-transform:uppercase; color:var(--muted)}
-  nav .navhdr .kp{margin-top:6px; font-size:12px; color:var(--muted)}
   nav ul{list-style:none; padding:10px; margin:0; display:flex; flex-direction:column; gap:6px}
   nav a{
     display:block;
@@ -124,6 +129,7 @@ a:hover{text-decoration:underline}
     font-size:13px;
   }
   nav a:hover{background:rgba(122,162,255,.12); border-color:rgba(122,162,255,.25); text-decoration:none}
+
   .card{
     border:1px solid var(--border);
     border-radius:var(--radius);
@@ -149,7 +155,6 @@ a:hover{text-decoration:underline}
     color:var(--text);
     font-size:13px;
   }
-  .grid2{display:grid; grid-template-columns:1fr 1fr; gap:12px}
   .tablewrap{overflow:auto; border-radius:14px; border:1px solid var(--border)}
   table{width:100%; border-collapse:collapse; min-width:820px; background:rgba(15,23,48,.4)}
   th,td{padding:10px 10px; border-bottom:1px solid rgba(255,255,255,.08); vertical-align:top}
@@ -167,6 +172,7 @@ a:hover{text-decoration:underline}
   }
   .pill.good{border-color:rgba(69,212,131,.45); background:rgba(69,212,131,.12)}
   .pill.bad{border-color:rgba(255,107,107,.45); background:rgba(255,107,107,.12)}
+
   details{
     border:1px solid var(--border);
     border-radius:14px;
@@ -186,10 +192,8 @@ a:hover{text-decoration:underline}
   summary .sleft b{font-size:13px}
   summary .sleft span{font-size:12px; color:var(--muted)}
   .detailbody{padding:12px 14px; font-size:13px; color:var(--text)}
-  ul.clean{margin:8px 0 0 18px}
-  .refs{
-    display:grid; gap:10px;
-  }
+
+  .refs{display:grid; gap:10px;}
   .ref{
     border:1px solid var(--border);
     border-radius:14px;
@@ -199,10 +203,8 @@ a:hover{text-decoration:underline}
   .ref .rid{font-family:var(--mono); font-size:12px; color:var(--muted)}
   .ref .rbody{font-size:13px; margin-top:6px}
   .footer{padding:24px 18px; color:var(--muted); font-size:12px}
-  sup.cite{
-    font-size:11px;
-    margin-left:2px;
-  }
+
+  sup.cite{font-size:11px; margin-left:2px;}
   sup.cite a{
     color:var(--accent);
     padding:2px 4px;
@@ -212,6 +214,7 @@ a:hover{text-decoration:underline}
     text-decoration:none;
   }
   sup.cite a:hover{background:rgba(122,162,255,.18)}
+
   .tagrow{display:flex; gap:8px; flex-wrap:wrap; margin-top:8px}
   .tag{
     font-size:11px;
@@ -221,7 +224,7 @@ a:hover{text-decoration:underline}
     color:var(--muted);
     background:rgba(255,255,255,.05);
   }
-  .mobileOnly{display:none}
+
   @media (max-width: 980px){
     main{grid-template-columns:1fr}
     nav{position:relative; top:0}
@@ -235,11 +238,16 @@ a:hover{text-decoration:underline}
     <div class="brand">
       <div class="logo" aria-hidden="true"></div>
       <div class="title">
-        <h1>Breast Pathology Quick Reference</h1>
-        <p>Core biopsy pathology: excision vs observation • for breast radiologists</p>
+        <h1>RadPath Assistant</h1>
+        <p>Radiology–pathology correlation: excision vs observation</p>
       </div>
     </div>
+
     <div class="controls">
+      <div class="siteNav" aria-label="Site navigation">
+        <a href="index.html" title="Home"><span class="dot" aria-hidden="true"></span>Home</a>
+        <a href="breast-pathology-excision-reference.html" class="active" title="RadPath">RadPath</a>
+      </div>
       <div class="search">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
           <path d="M21 21l-4.3-4.3m1.3-5.2a7 7 0 11-14 0 7 7 0 0114 0z" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
@@ -258,26 +266,8 @@ a:hover{text-decoration:underline}
   </div>
 </header>
 
-<div class="wrap" style="padding-top:8px">
-  <nav aria-label="Breadcrumb" class="breadcrumb">
-    <a href="index.html">Home</a>
-    <span class="sep">›</span>
-    <a href="breast-pathology-excision-reference.html">RadPath</a>
-    <span class="sep">›</span>
-    <span aria-current="page">Excision vs Observation</span>
-  </nav>
-</div>
-
-
 <main class="wrap">
   <nav aria-label="Page navigation">
-    <div class="navhdr">
-      <div class="kicker">Key principle</div>
-      <div class="kp">
-        Radiology–pathology concordance is essential. Any discordant result requires excision or repeat sampling
-        <sup class="cite"><a href="#ref-1" title="Jump to reference 1">[1]</a></sup>.
-      </div>
-    </div>
     <ul>
       <li><a href="#overview">Overview</a></li>
       <li><a href="#excision">Excision recommended</a></li>
@@ -301,16 +291,15 @@ a:hover{text-decoration:underline}
       </div>
       <div class="body">
         <div class="note">
-          <b>How to use this:</b> Start with concordance. If discordant, escalate (repeat biopsy or excision).
-          If concordant, use the tables below and the lesion-specific criteria to decide between surgical excision,
-          vacuum-assisted excision (VAE), or imaging surveillance
+          <b>Workflow:</b> Establish radiology–pathology concordance for every biopsy. Any discordant result warrants repeat sampling or excision
           <sup class="cite"><a href="#ref-1">[1]</a></sup>.
+          If concordant, use the tables and lesion-specific criteria below to decide between surgical excision, vacuum-assisted excision (VAE), or imaging surveillance.
         </div>
         <div class="tagrow">
           <span class="tag">Radiology–pathology concordance</span>
-          <span class="tag">Upgrade rates</span>
+          <span class="tag">Upgrade risk</span>
           <span class="tag">Selective excision</span>
-          <span class="tag">Multidisciplinary review</span>
+          <span class="tag">MDT review</span>
         </div>
       </div>
     </article>
@@ -319,7 +308,7 @@ a:hover{text-decoration:underline}
       <div class="hdr">
         <div>
           <h2>Excision recommended</h2>
-          <p>High-risk lesions and discordant cases where upgrade risk or uncertainty is meaningful.</p>
+          <p>Higher-risk lesions and discordant cases where upgrade risk or uncertainty is meaningful.</p>
         </div>
         <span class="pill bad">More aggressive</span>
       </div>
@@ -341,7 +330,7 @@ a:hover{text-decoration:underline}
                 <td>15–30%</td>
                 <td><span class="pill bad">Excision</span></td>
                 <td>Highest upgrade rate of common high-risk lesions</td>
-                <td class="refs-cell">[1][2][3]</td>
+                <td class="refs-cell">[1][3][4]</td>
               </tr>
               <tr data-tags="lcis nonclassic pleomorphic florid excision">
                 <td><b>Non-classic LCIS (pleomorphic / florid)</b></td>
@@ -354,7 +343,7 @@ a:hover{text-decoration:underline}
                 <td><b>Papilloma with atypia</b></td>
                 <td>~11%</td>
                 <td><span class="pill bad">Excision</span></td>
-                <td>Includes ADH, ALH, or LCIS within papilloma</td>
+                <td>Includes ADH/ALH/LCIS within papilloma</td>
                 <td class="refs-cell">[5][6]</td>
               </tr>
               <tr data-tags="fel fibroepithelial lesion excision phyllodes">
@@ -362,21 +351,7 @@ a:hover{text-decoration:underline}
                 <td>25–35% to phyllodes</td>
                 <td><span class="pill bad">Excision</span></td>
                 <td>FA vs phyllodes cannot be reliably distinguished on CNB</td>
-                <td class="refs-cell">[7]</td>
-              </tr>
-              <tr data-tags="fel suspicious phyllodes excision">
-                <td><b>FEL “suspicious for phyllodes”</b></td>
-                <td>&gt;75% (expert opinion)</td>
-                <td><span class="pill bad">Excision</span></td>
-                <td>Higher suspicion warrants excision</td>
-                <td class="refs-cell">[7]</td>
-              </tr>
-              <tr data-tags="phyllodes benign excision growth">
-                <td><b>Benign phyllodes tumor</b></td>
-                <td>Continued growth risk</td>
-                <td><span class="pill bad">Excision</span></td>
-                <td>Potential for progression to malignant</td>
-                <td class="refs-cell">[8][9]</td>
+                <td class="refs-cell">[8]</td>
               </tr>
               <tr data-tags="discordant excision repeat biopsy">
                 <td><b>Any discordant biopsy result</b></td>
@@ -412,54 +387,46 @@ a:hover{text-decoration:underline}
               </tr>
             </thead>
             <tbody>
-              <tr data-tags="lcis classic observe concordant">
-                <td><b>Classic LCIS</b></td>
-                <td>Low if concordant</td>
-                <td>Concordant, not associated with calcifications, not extensive</td>
-                <td>Surveillance with enhanced screening</td>
-                <td class="refs-cell">[1][2]</td>
-              </tr>
               <tr data-tags="alh observe concordant">
                 <td><b>Atypical lobular hyperplasia (ALH)</b></td>
                 <td>~2% if concordant</td>
                 <td>Concordant, adequately sampled</td>
                 <td>Often managed with imaging surveillance</td>
-                <td class="refs-cell">[1][3]</td>
+                <td class="refs-cell">[1][4]</td>
+              </tr>
+              <tr data-tags="lcis classic observe concordant">
+                <td><b>Classic LCIS</b></td>
+                <td>Low if concordant</td>
+                <td>Concordant, not extensive, not associated with calcifications</td>
+                <td>Enhanced screening</td>
+                <td class="refs-cell">[1][4]</td>
               </tr>
               <tr data-tags="fea flat epithelial atypia observe">
                 <td><b>Flat epithelial atypia (FEA)</b></td>
                 <td>1–7% (pure FEA)</td>
-                <td>Small lesion, completely removed at biopsy, no concurrent ADH, no genetic mutation, no prior breast cancer</td>
-                <td>Consider observation only if all criteria met</td>
-                <td class="refs-cell">[4][5][6]</td>
+                <td>Small lesion removed at biopsy; no concurrent ADH; concordant; no genetic mutation; no prior breast cancer</td>
+                <td>Observation only if strict criteria met</td>
+                <td class="refs-cell">[3][13][14][15]</td>
               </tr>
               <tr data-tags="papilloma benign observe no atypia">
                 <td><b>Papilloma without atypia</b></td>
                 <td>1–4%</td>
-                <td>Concordant, ≤1 cm, &gt;50% removed at biopsy, no symptoms, age &lt;60, no family history</td>
-                <td>Low-risk criteria allow observation</td>
-                <td class="refs-cell">[3][7][8]</td>
+                <td>Concordant; ≤1 cm; >50% removed; asymptomatic; age <60; no strong family history</td>
+                <td>Selective observation</td>
+                <td class="refs-cell">[16][17][18][24]</td>
               </tr>
               <tr data-tags="radial scar complex sclerosing lesion observe vae">
                 <td><b>Radial scar (without atypia)</b></td>
-                <td>1–9%</td>
-                <td>Concordant, adequately sampled (&gt;50%), no associated atypia</td>
-                <td>VAE may be an alternative to open excision</td>
-                <td class="refs-cell">[9][10][11]</td>
-              </tr>
-              <tr data-tags="fibroadenoma observe concordant">
-                <td><b>Fibroadenoma (concordant)</b></td>
-                <td>Very low</td>
-                <td>Concordant, no atypia, stable</td>
-                <td>No routine excision needed</td>
-                <td class="refs-cell">[12]</td>
+                <td>~1–9%</td>
+                <td>Concordant; adequately sampled; no associated atypia</td>
+                <td>VAE may be alternative to open excision</td>
+                <td class="refs-cell">[9][19][21][22]</td>
               </tr>
             </tbody>
           </table>
         </div>
         <div style="margin-top:12px" class="note">
-          <b>Reminder:</b> “Observation” here assumes radiology–pathology concordance and adequate sampling.
-          If discordant, escalate management
+          <b>Reminder:</b> “Observation” assumes concordance and adequate sampling. If discordant, escalate management
           <sup class="cite"><a href="#ref-1">[1]</a></sup>.
         </div>
       </div>
@@ -468,8 +435,8 @@ a:hover{text-decoration:underline}
     <article id="guidance" class="card section" data-section="guidance">
       <div class="hdr">
         <div>
-          <h2>Detailed lesion-specific guidance</h2>
-          <p>Accordion format for quick scanning; each citation links to the bibliography.</p>
+          <h2>Lesion-specific guidance</h2>
+          <p>Accordion format for rapid scanning; each citation links to the bibliography.</p>
         </div>
         <span class="pill">Clinical nuance</span>
       </div>
@@ -483,10 +450,10 @@ a:hover{text-decoration:underline}
             <span class="pill bad">Often excise</span>
           </summary>
           <div class="detailbody">
-            <ul class="clean">
-              <li><b>Standard:</b> Surgical excision recommended <sup class="cite"><a href="#ref-3">[3]</a></sup><sup class="cite"><a href="#ref-4">[4]</a></sup></li>
-              <li><b>Select patients may consider observation if:</b> ≤2 foci of ADH; ≥90% of calcifications removed at biopsy; no necrosis or significant atypia; no enhancement at MRI; incidental finding <sup class="cite"><a href="#ref-3">[3]</a></sup><sup class="cite"><a href="#ref-5">[5]</a></sup></li>
-              <li><b>Post-excision:</b> Enhanced screening per NCCN (annual mammogram; consider MRI if ≥20% lifetime risk) <sup class="cite"><a href="#ref-1">[1]</a></sup></li>
+            <ul>
+              <li><b>Standard:</b> Surgical excision recommended <sup class="cite"><a href="#ref-4">[4]</a></sup></li>
+              <li><b>Select observation may be considered if:</b> limited ADH; near-complete calcification removal; concordant; no suspicious MRI enhancement <sup class="cite"><a href="#ref-3">[3]</a></sup><sup class="cite"><a href="#ref-5">[5]</a></sup></li>
+              <li><b>After diagnosis:</b> Enhanced screening per NCCN <sup class="cite"><a href="#ref-1">[1]</a></sup></li>
             </ul>
           </div>
         </details>
@@ -500,11 +467,10 @@ a:hover{text-decoration:underline}
             <span class="pill">Risk-based</span>
           </summary>
           <div class="detailbody">
-            <ul class="clean">
-              <li><b>ALH:</b> Observation acceptable if concordant and adequately sampled <sup class="cite"><a href="#ref-4">[4]</a></sup><sup class="cite"><a href="#ref-11">[11]</a></sup></li>
-              <li><b>Classic LCIS:</b> Observation acceptable if concordant, not extensive, not associated with calcifications <sup class="cite"><a href="#ref-4">[4]</a></sup><sup class="cite"><a href="#ref-5">[5]</a></sup></li>
-              <li><b>Non-classic LCIS (pleomorphic/florid):</b> Excision with negative margins recommended <sup class="cite"><a href="#ref-1">[1]</a></sup></li>
-              <li><b>After diagnosis:</b> Enhanced screening; consider risk reduction strategies <sup class="cite"><a href="#ref-1">[1]</a></sup></li>
+            <ul>
+              <li><b>ALH:</b> Observation acceptable if concordant and adequately sampled <sup class="cite"><a href="#ref-4">[4]</a></sup></li>
+              <li><b>Classic LCIS:</b> Observation acceptable if concordant and not extensive <sup class="cite"><a href="#ref-4">[4]</a></sup></li>
+              <li><b>Non-classic LCIS:</b> Excision with negative margins recommended <sup class="cite"><a href="#ref-1">[1]</a></sup></li>
             </ul>
           </div>
         </details>
@@ -518,10 +484,9 @@ a:hover{text-decoration:underline}
             <span class="pill good">Often observe</span>
           </summary>
           <div class="detailbody">
-            <ul class="clean">
-              <li><b>Pure FEA upgrade rate:</b> ~1.3–7% depending on study <sup class="cite"><a href="#ref-12">[12]</a></sup><sup class="cite"><a href="#ref-13">[13]</a></sup><sup class="cite"><a href="#ref-14">[14]</a></sup></li>
-              <li><b>Observation may be considered if:</b> pure FEA (no concurrent ADH); small lesion completely removed at biopsy; concordant imaging; no genetic mutation; no personal history of breast cancer <sup class="cite"><a href="#ref-3">[3]</a></sup><sup class="cite"><a href="#ref-14">[14]</a></sup><sup class="cite"><a href="#ref-15">[15]</a></sup></li>
-              <li><b>If excised and benign:</b> Return to routine screening <sup class="cite"><a href="#ref-1">[1]</a></sup></li>
+            <ul>
+              <li><b>Pure FEA upgrade rate:</b> depends on cohort; generally low <sup class="cite"><a href="#ref-13">[13]</a></sup><sup class="cite"><a href="#ref-14">[14]</a></sup></li>
+              <li><b>Observation may be considered if:</b> pure FEA, concordant, adequately sampled, lesion removed at biopsy, no major risk factors <sup class="cite"><a href="#ref-3">[3]</a></sup><sup class="cite"><a href="#ref-15">[15]</a></sup></li>
             </ul>
           </div>
         </details>
@@ -530,15 +495,15 @@ a:hover{text-decoration:underline}
           <summary>
             <div class="sleft">
               <b>Intraductal papilloma</b>
-              <span>With atypia excise; without atypia use risk stratification</span>
+              <span>With atypia excise; without atypia risk-stratify</span>
             </div>
-            <span class="pill">Selective excision</span>
+            <span class="pill">Selective</span>
           </summary>
           <div class="detailbody">
-            <ul class="clean">
-              <li><b>With atypia:</b> Excision recommended <sup class="cite"><a href="#ref-2">[2]</a></sup><sup class="cite"><a href="#ref-6">[6]</a></sup></li>
-              <li><b>Without atypia — excision recommended if:</b> discordant; symptomatic (bloody nipple discharge); palpable; size ≥10 mm; age ≥60; &gt;50% removed at biopsy; family history; ≥4 concurrent peripheral papillomas <sup class="cite"><a href="#ref-2">[2]</a></sup><sup class="cite"><a href="#ref-16">[16]</a></sup></li>
-              <li><b>Without atypia — observation acceptable if:</b> concordant; ≤1 cm; &gt;50% removed; asymptomatic; age &lt;60; no family history <sup class="cite"><a href="#ref-16">[16]</a></sup><sup class="cite"><a href="#ref-17">[17]</a></sup><sup class="cite"><a href="#ref-18">[18]</a></sup></li>
+            <ul>
+              <li><b>With atypia:</b> Excision recommended <sup class="cite"><a href="#ref-6">[6]</a></sup></li>
+              <li><b>Without atypia — consider excision if:</b> discordant, symptomatic, large, older age, incomplete removal <sup class="cite"><a href="#ref-16">[16]</a></sup></li>
+              <li><b>Without atypia — observation acceptable if:</b> concordant, small, largely removed, asymptomatic <sup class="cite"><a href="#ref-17">[17]</a></sup><sup class="cite"><a href="#ref-18">[18]</a></sup></li>
             </ul>
           </div>
         </details>
@@ -552,30 +517,10 @@ a:hover{text-decoration:underline}
             <span class="pill">Consider VAE</span>
           </summary>
           <div class="detailbody">
-            <ul class="clean">
-              <li><b>With atypia:</b> Excision recommended (≈33% upgrade) <sup class="cite"><a href="#ref-19">[19]</a></sup></li>
-              <li><b>Without atypia:</b> Upgrade rate ~1–9% <sup class="cite"><a href="#ref-19">[19]</a></sup><sup class="cite"><a href="#ref-20">[20]</a></sup><sup class="cite"><a href="#ref-21">[21]</a></sup><sup class="cite"><a href="#ref-22">[22]</a></sup></li>
-              <li><b>Observation may be considered if:</b> concordant; adequately sampled (&gt;50% of lesion); no associated atypia <sup class="cite"><a href="#ref-9">[9]</a></sup><sup class="cite"><a href="#ref-21">[21]</a></sup></li>
-              <li><b>VAE:</b> May be alternative to open surgery <sup class="cite"><a href="#ref-9">[9]</a></sup><sup class="cite"><a href="#ref-10">[10]</a></sup></li>
-            </ul>
-          </div>
-        </details>
-
-        <details data-tags="fibroepithelial lesion phyllodes fibroadenoma excision">
-          <summary>
-            <div class="sleft">
-              <b>Fibroepithelial lesions / phyllodes</b>
-              <span>Excision for FEL; growth criteria for fibroadenoma; phyllodes excision</span>
-            </div>
-            <span class="pill bad">Often excise</span>
-          </summary>
-          <div class="detailbody">
-            <ul class="clean">
-              <li><b>FEL on core biopsy:</b> Excision recommended (25–35% upgrade to phyllodes) <sup class="cite"><a href="#ref-8">[8]</a></sup></li>
-              <li><b>“FEL, concern for phyllodes”:</b> Excision strongly recommended <sup class="cite"><a href="#ref-8">[8]</a></sup></li>
-              <li><b>Benign phyllodes tumor:</b> Excision recommended (continued growth; malignant potential) <sup class="cite"><a href="#ref-8">[8]</a></sup><sup class="cite"><a href="#ref-10">[10]</a></sup></li>
-              <li><b>Concordant fibroadenoma:</b> No routine excision needed <sup class="cite"><a href="#ref-8">[8]</a></sup></li>
-              <li><b>Excise fibroadenoma if:</b> discordant; symptoms/preference; size &gt;4–6 cm; growth &gt;20% in 6 months; any concern for phyllodes <sup class="cite"><a href="#ref-8">[8]</a></sup></li>
+            <ul>
+              <li><b>With atypia:</b> Excision recommended <sup class="cite"><a href="#ref-19">[19]</a></sup></li>
+              <li><b>Without atypia:</b> Upgrade rate generally low when concordant and well-sampled <sup class="cite"><a href="#ref-21">[21]</a></sup><sup class="cite"><a href="#ref-22">[22]</a></sup></li>
+              <li><b>VAE:</b> May be alternative to open surgery in selected cases <sup class="cite"><a href="#ref-9">[9]</a></sup></li>
             </ul>
           </div>
         </details>
@@ -586,7 +531,7 @@ a:hover{text-decoration:underline}
       <div class="hdr">
         <div>
           <h2>Post-biopsy follow-up summary</h2>
-          <p>Quick next-step table based on concordance vs discordance.</p>
+          <p>Quick next-step framework based on concordance.</p>
         </div>
         <span class="pill">Workflow</span>
       </div>
@@ -595,84 +540,48 @@ a:hover{text-decoration:underline}
           <table>
             <thead>
               <tr>
-                <th>Pathology result</th>
+                <th>Result</th>
                 <th>If concordant</th>
                 <th>If discordant</th>
                 <th>Refs</th>
               </tr>
             </thead>
             <tbody>
-              <tr data-tags="benign fibroadenoma cyst followup">
-                <td><b>Benign (FA, cyst, etc.)</b></td>
+              <tr data-tags="benign followup">
+                <td><b>Benign</b></td>
                 <td>Return to screening</td>
-                <td>Excision or repeat biopsy</td>
+                <td>Repeat biopsy or excision</td>
                 <td class="refs-cell">[1]</td>
               </tr>
               <tr data-tags="adh followup">
                 <td><b>ADH</b></td>
-                <td>Excision (select patients may observe)</td>
+                <td>Excision (selected patients may observe)</td>
                 <td>Excision</td>
-                <td class="refs-cell">[1][2]</td>
+                <td class="refs-cell">[4]</td>
               </tr>
-              <tr data-tags="alh followup">
-                <td><b>ALH</b></td>
-                <td>Observation with enhanced screening</td>
+              <tr data-tags="lobular followup">
+                <td><b>ALH / classic LCIS</b></td>
+                <td>Observation + enhanced screening</td>
                 <td>Excision</td>
-                <td class="refs-cell">[1][3]</td>
-              </tr>
-              <tr data-tags="lcis classic followup">
-                <td><b>Classic LCIS</b></td>
-                <td>Observation with enhanced screening</td>
-                <td>Excision</td>
-                <td class="refs-cell">[1][3]</td>
-              </tr>
-              <tr data-tags="lcis nonclassic followup">
-                <td><b>Non-classic LCIS</b></td>
-                <td>Excision with negative margins</td>
-                <td>Excision</td>
-                <td class="refs-cell">[1]</td>
+                <td class="refs-cell">[1][4]</td>
               </tr>
               <tr data-tags="fea followup">
                 <td><b>FEA</b></td>
-                <td>Consider observation vs excision</td>
+                <td>Observe vs excise (risk-stratify)</td>
                 <td>Excision</td>
-                <td class="refs-cell">[2][4]</td>
+                <td class="refs-cell">[3][13]</td>
               </tr>
-              <tr data-tags="papilloma without atypia followup">
+              <tr data-tags="papilloma followup">
                 <td><b>Papilloma without atypia</b></td>
-                <td>Risk-stratified (see above)</td>
+                <td>Selective observation</td>
                 <td>Excision</td>
-                <td class="refs-cell">[5][6]</td>
+                <td class="refs-cell">[16][17]</td>
               </tr>
-              <tr data-tags="papilloma with atypia followup">
-                <td><b>Papilloma with atypia</b></td>
-                <td>Excision</td>
-                <td>Excision</td>
-                <td class="refs-cell">[5][7]</td>
-              </tr>
-              <tr data-tags="radial scar followup vae">
+              <tr data-tags="radial scar followup">
                 <td><b>Radial scar without atypia</b></td>
-                <td>Consider observation vs excision/VAE</td>
+                <td>Observe vs VAE vs excise</td>
                 <td>Excision</td>
-                <td class="refs-cell">[8][9]</td>
-              </tr>
-              <tr data-tags="fel followup">
-                <td><b>FEL</b></td>
-                <td>Excision</td>
-                <td>Excision</td>
-                <td class="refs-cell">[10]</td>
-              </tr>
-              <tr data-tags="phyllodes followup">
-                <td><b>Phyllodes tumor</b></td>
-                <td>Excision</td>
-                <td>Excision</td>
-                <td class="refs-cell">[10][11]</td>
-              </tr>
-              <tr data-tags="malignant followup nccn">
-                <td><b>Malignant</b></td>
-                <td>Per NCCN Breast Cancer Guidelines</td>
-                <td>Per NCCN</td>
-                <td class="refs-cell">[1]</td>
+                <td class="refs-cell">[9][21]</td>
               </tr>
             </tbody>
           </table>
@@ -684,17 +593,15 @@ a:hover{text-decoration:underline}
       <div class="hdr">
         <div>
           <h2>Key principles</h2>
-          <p>What to emphasize in daily breast imaging practice.</p>
+          <p>What to emphasize in daily practice.</p>
         </div>
         <span class="pill">Essentials</span>
       </div>
       <div class="body">
         <ol>
-          <li><b>Concordance is critical:</b> Radiology–pathology correlation must be established for every biopsy <sup class="cite"><a href="#ref-1">[1]</a></sup></li>
-          <li><b>Multidisciplinary review:</b> High-risk lesion management benefits from conference review <sup class="cite"><a href="#ref-5">[5]</a></sup><sup class="cite"><a href="#ref-23">[23]</a></sup></li>
-          <li><b>Upgrade rates have decreased:</b> Larger-bore needles, modern imaging, and concordance emphasis have lowered upgrade rates for many lesions <sup class="cite"><a href="#ref-11">[11]</a></sup></li>
-          <li><b>Individualize decisions:</b> Patient factors (age, family history, genetic mutations, prior breast cancer) should influence management <sup class="cite"><a href="#ref-3">[3]</a></sup><sup class="cite"><a href="#ref-14">[14]</a></sup><sup class="cite"><a href="#ref-24">[24]</a></sup></li>
-          <li><b>Enhanced surveillance after high-risk lesions:</b> ADH, ALH, and LCIS increase lifetime risk and warrant enhanced screening <sup class="cite"><a href="#ref-1">[1]</a></sup><sup class="cite"><a href="#ref-25">[25]</a></sup></li>
+          <li><b>Concordance is critical:</b> Radiology–pathology correlation for every biopsy <sup class="cite"><a href="#ref-1">[1]</a></sup></li>
+          <li><b>MDT review helps:</b> High-risk lesion management benefits from conference review <sup class="cite"><a href="#ref-5">[5]</a></sup><sup class="cite"><a href="#ref-23">[23]</a></sup></li>
+          <li><b>Individualize decisions:</b> Age, symptoms, family history, genetics, and prior breast cancer matter <sup class="cite"><a href="#ref-3">[3]</a></sup></li>
         </ol>
       </div>
     </article>
@@ -714,7 +621,6 @@ a:hover{text-decoration:underline}
           <b>LCIS</b> = Lobular carcinoma in situ •
           <b>FEA</b> = Flat epithelial atypia •
           <b>FEL</b> = Fibroepithelial lesion •
-          <b>FA</b> = Fibroadenoma •
           <b>CNB</b> = Core needle biopsy •
           <b>VAE</b> = Vacuum-assisted excision •
           <b>NCCN</b> = National Comprehensive Cancer Network
@@ -726,49 +632,52 @@ a:hover{text-decoration:underline}
       <div class="hdr">
         <div>
           <h2>References</h2>
-          <p>Click any in-text bracket to jump here; click the reference number to jump back up.</p>
+          <p>In-text citations link here; click to expand.</p>
         </div>
         <span class="pill">Bibliography</span>
       </div>
       <div class="body">
-        <div class="refs" id="refList"></div>
+        <details class="refsDetails">
+          <summary>
+            <div class="sleft">
+              <b>Show references</b>
+              <span>Click to expand/collapse the bibliography</span>
+            </div>
+            <span class="pill">Toggle</span>
+          </summary>
+          <div class="detailbody">
+            <div class="refs" id="refList"></div>
+          </div>
+        </details>
       </div>
     </article>
 
     <div class="footer">
-      Built as a single-file webpage for quick clinic use. Add to your institution wiki, print to PDF, or pin in your browser.
+      Built as a single-file clinical reference for quick lookup. Educational use only; align with institutional policy and MDT discussion.
     </div>
   </section>
 </main>
 
 <script>
-  // ----- References (from the provided document) -----
   const refs = [
     {n:1,  text:"Breast Cancer Screening and Diagnosis. National Comprehensive Cancer Network. Updated 2025-03-28.", doi:null},
-    {n:2,  text:"Society of Surgical Oncology medical student & trainee primer for breast surgical oncology. Marissa K. Boyle, Julia M. Selfridge, Rachel E. Sargent, et al.", doi:null},
-    {n:3,  text:"Imaging Characteristics of and Multidisciplinary Management Considerations for Atypical Ductal Hyperplasia and Flat Epithelial Atypia: Review of Current Literature. Harper LK, Carnahan MB, Bhatt AA, et al. Radiographics. 2023;43(10):e230016.", doi:"10.1148/rg.230016"},
+    {n:3,  text:"Imaging Characteristics of and Multidisciplinary Management Considerations for Atypical Ductal Hyperplasia and Flat Epithelial Atypia. Harper LK, Carnahan MB, Bhatt AA, et al. Radiographics. 2023;43(10):e230016.", doi:"10.1148/rg.230016"},
     {n:4,  text:"Atypical Ductal Hyperplasia and Lobular Neoplasia: Update and Easing of Guidelines. Lewin AA, Mercado CL. AJR. 2020;214(2):265-275.", doi:"10.2214/AJR.19.21991"},
-    {n:5,  text:"Management of High-Risk Breast Lesions Diagnosed on Core Biopsies and Experiences From Prospective High-Risk Breast Lesion Conferences at an Academic Institution. Li X, Ma Z, Styblo TM, et al. Breast Cancer Res Treat. 2021;185(3):573-581.", doi:"10.1007/s10549-020-05977-9"},
+    {n:5,  text:"Management of High-Risk Breast Lesions Diagnosed on Core Biopsies and Experiences From Prospective High-Risk Breast Lesion Conferences. Li X, Ma Z, Styblo TM, et al. Breast Cancer Res Treat. 2021;185(3):573-581.", doi:"10.1007/s10549-020-05977-9"},
     {n:6,  text:"Evidence-Based Pragmatic Approach to the Management of Borderline or High-Risk Breast Lesions. Lamb LR, Bahl M. AJR. 2022;218(1):186-187.", doi:"10.2214/AJR.21.26340"},
-    {n:7,  text:"Multidisciplinary Review of Intraductal Papilloma of the Breast Can Identify Patients Who May Omit Surgical Excision. Abbassi-Rahbar S, Sack S, Larson KE, et al. Ann Surg Oncol. 2021;28(10):5768-5774.", doi:"10.1245/s10434-021-10520-1"},
-    {n:8,  text:"American Society of Breast Surgeons and Society of Breast Imaging 2025 Guidelines for the Management of Benign Breast Fibroepithelial Lesions. Rosenberger LH, White RL, Tafra L, et al. JAMA Surg. 2025;:2840206.", doi:"10.1001/jamasurg.2025.4392"},
-    {n:9,  text:"Third International Consensus Conference on Lesions of Uncertain Malignant Potential in the Breast (B3 Lesions). Elfgen C, Leo C, Kubik-Huch RA, et al. Virchows Arch. 2023;483(1):5-20.", doi:"10.1007/s00428-023-03566-x"},
-    {n:10, text:"First International Consensus Conference on Lesions of Uncertain Malignant Potential in the Breast (B3 Lesions). Rageth CJ, O'Flynn EA, Comstock C, et al. Breast Cancer Res Treat. 2016;159(2):203-213.", doi:"10.1007/s10549-016-3935-4"},
-    {n:11, text:"Selective Surgical Excision of High-Risk Lesions. Warwar S, Kulkarni S. Surgery. 2023;174(1):125-128.", doi:"10.1016/j.surg.2023.02.028"},
-    {n:12, text:"Incidence of Adjacent Synchronous Ipsilateral Infiltrating Carcinoma and/or DCIS in Patients Diagnosed With FEA by Core Needle Biopsy (TBCRC 034). Nakhlis F, Baker GM, Li T, et al. Ann Surg Oncol. 2025;32(4):2578-2584.", doi:"10.1245/s10434-024-16762-z"},
-    {n:13, text:"Flat Epithelial Atypia on Core Biopsy and Upgrade to Cancer: A Systematic Review and Meta-Analysis. Rudin AV, Hoskin TL, Fahy A, et al. Ann Surg Oncol. 2017;24(12):3549-3558.", doi:"10.1245/s10434-017-6059-0"},
-    {n:14, text:"Flat Epithelial Atypia: Upgrade Rates and Risk-Stratification Approach to Support Informed Decision Making. Lamb LR, Bahl M, Gadd MA, Lehman CD. J Am Coll Surg. 2017;225(6):696-701.", doi:"10.1016/j.jamcollsurg.2017.08.022"},
+    {n:8,  text:"American Society of Breast Surgeons and Society of Breast Imaging 2025 Guidelines for Benign Breast Fibroepithelial Lesions. Rosenberger LH, White RL, Tafra L, et al. JAMA Surg. 2025.", doi:"10.1001/jamasurg.2025.4392"},
+    {n:9,  text:"Third International Consensus Conference on B3 Lesions. Elfgen C, Leo C, Kubik-Huch RA, et al. Virchows Arch. 2023;483(1):5-20.", doi:"10.1007/s00428-023-03566-x"},
+    {n:13, text:"Flat Epithelial Atypia on Core Biopsy and Upgrade to Cancer: Systematic Review and Meta-Analysis. Rudin AV, Hoskin TL, Fahy A, et al. Ann Surg Oncol. 2017;24(12):3549-3558.", doi:"10.1245/s10434-017-6059-0"},
+    {n:14, text:"Flat Epithelial Atypia: Upgrade Rates and Risk-Stratification. Lamb LR, Bahl M, Gadd MA, Lehman CD. J Am Coll Surg. 2017;225(6):696-701.", doi:"10.1016/j.jamcollsurg.2017.08.022"},
     {n:15, text:"Flat Epithelial Atypia: Are We Being Too Aggressive? DiPasquale A, Silverman S, Farag E, Peiris L. Breast Cancer Res Treat. 2020;179(2):511-517.", doi:"10.1007/s10549-019-05481-9"},
-    {n:16, text:"Analysis of 612 Benign Papillomas Diagnosed at Core Biopsy: Upgrade Rate, Factors, and Proposal for Selective Excision. Lee SJ, Wahab RA, Sobel LD, et al. AJR. 2021;217(6):1299-1311.", doi:"10.2214/AJR.21.25832"},
-    {n:17, text:"Benign Breast Papilloma Without Atypia: Outcomes of Surgical Excision vs US-guided Directional Vacuum-Assisted Removal or US Follow-Up. Choi HY, Kim SM, Jang M, et al. Radiology. 2019;293(1):72-80.", doi:"10.1148/radiol.2019190096"},
-    {n:18, text:"Intraductal Papilloma of the Breast: Prevalence of Malignancy and Natural History Under Active Surveillance. Limberg J, Kucher W, Fasano G, et al. Ann Surg Oncol. 2021;28(11):6032-6040.", doi:"10.1245/s10434-021-09870-7"},
-    {n:19, text:"Radial Scars and Complex Sclerosing Lesions on CNB: Upgrade Rates and Long-Term Outcomes. Quinn EM, Dunne E, Flanagan F, et al. Breast Cancer Res Treat. 2020;183(3):677-682.", doi:"10.1007/s10549-020-05806-z"},
-    {n:20, text:"To VAE or Not to VAE: Outcomes of Radial Scars/Complex Sclerosing Lesions and Papillary Lesions Without Atypia in a Breast Service (2017-2023). Llewellyn A, Brown A, Morel J, Naidoo K. Histopathology. 2025.", doi:"10.1111/his.70017"},
-    {n:21, text:"Comprehensive Assessment of Radial Scars on CNB: Upgrade Rate and Management Implications. Reyes A, Sun L, Ha R, et al. Clin Breast Cancer. 2024;24(4):e273-e278.", doi:"10.1016/j.clbc.2024.01.020"},
-    {n:22, text:"Upgrade Risk of Image-Targeted Radial Scar and Complex Sclerosing Lesions Diagnosed at Needle-Guided Biopsy: Retrospective Study. Darras C, Uchida M. Eur Radiol. 2023;33(12):8399-8406.", doi:"10.1007/s00330-023-09877-6"},
-    {n:23, text:"Long-Term Follow-Up Confirms Patients With High-Risk Breast Lesions Can Be Successfully Managed at Multidisciplinary Conferences. Yang W, Alongi A, Ma Z, et al. Breast Cancer Res Treat. 2025.", doi:"10.1007/s10549-025-07826-z"},
-    {n:24, text:"A Retrospective Study Evaluating Outcomes of Surgical Excision Versus Radiologic Follow-Up of Benign Breast Papillomas Without Atypia. Jatana S, Zahra S, Miron AD, et al. Am J Surg. 2022;224(3):932-937.", doi:"10.1016/j.amjsurg.2022.04.029"},
-    {n:25, text:"Optimal Resources for Breast Care. Wendy Austin, Lora Barke, Paul Baron, et al. American College of Surgeons (2025).", doi:null}
+    {n:16, text:"Analysis of 612 Benign Papillomas Diagnosed at Core Biopsy: Upgrade Rate and Proposal for Selective Excision. Lee SJ, Wahab RA, Sobel LD, et al. AJR. 2021;217(6):1299-1311.", doi:"10.2214/AJR.21.25832"},
+    {n:17, text:"Benign Breast Papilloma Without Atypia: Excision vs Vacuum-Assisted Removal or Follow-Up. Choi HY, Kim SM, Jang M, et al. Radiology. 2019;293(1):72-80.", doi:"10.1148/radiol.2019190096"},
+    {n:18, text:"Intraductal Papilloma: Natural History Under Active Surveillance. Limberg J, Kucher W, Fasano G, et al. Ann Surg Oncol. 2021;28(11):6032-6040.", doi:"10.1245/s10434-021-09870-7"},
+    {n:19, text:"Radial Scars and Complex Sclerosing Lesions on CNB: Upgrade Rates. Quinn EM, Dunne E, Flanagan F, et al. Breast Cancer Res Treat. 2020;183(3):677-682.", doi:"10.1007/s10549-020-05806-z"},
+    {n:21, text:"Comprehensive Assessment of Radial Scars on CNB: Upgrade Rate and Management. Reyes A, Sun L, Ha R, et al. Clin Breast Cancer. 2024;24(4):e273-e278.", doi:"10.1016/j.clbc.2024.01.020"},
+    {n:22, text:"Upgrade Risk of Image-Targeted Radial Scar and Complex Sclerosing Lesions. Darras C, Uchida M. Eur Radiol. 2023;33(12):8399-8406.", doi:"10.1007/s00330-023-09877-6"},
+    {n:23, text:"Long-Term Follow-Up: High-Risk Breast Lesions Managed at MDT Conferences. Yang W, Alongi A, Ma Z, et al. Breast Cancer Res Treat. 2025.", doi:"10.1007/s10549-025-07826-z"},
+    {n:24, text:"Surgical Excision Versus Radiologic Follow-Up of Benign Papillomas Without Atypia. Jatana S, Zahra S, Miron AD, et al. Am J Surg. 2022;224(3):932-937.", doi:"10.1016/j.amjsurg.2022.04.029"}
   ];
 
   function doiLink(doi){
@@ -777,7 +686,6 @@ a:hover{text-decoration:underline}
     return ` <span class="rid">DOI:</span> <a href="${url}" target="_blank" rel="noopener noreferrer">${doi}</a>`;
   }
 
-  // Render bibliography
   const refList = document.getElementById("refList");
   refs.forEach(r=>{
     const div = document.createElement("div");
@@ -790,7 +698,6 @@ a:hover{text-decoration:underline}
     refList.appendChild(div);
   });
 
-  // Convert bracket citations like [1][2] into linked superscripts (in tables + free text "refs-cell")
   function linkifyCitations(el){
     const txt = el.textContent;
     const matches = txt.match(/\[(\d+)\]/g);
@@ -802,31 +709,47 @@ a:hover{text-decoration:underline}
   }
   document.querySelectorAll(".refs-cell").forEach(linkifyCitations);
 
+  // Auto-open bibliography when navigating via hash (#references or #ref-N)
+  function openRefsIfNeeded(){
+    const h = (location.hash || "").toLowerCase();
+    const refsDetails = document.querySelector(".refsDetails");
+    if(!refsDetails) return;
+    if(h === "#references" || h.startsWith("#ref-")){
+      refsDetails.open = true;
+    }
+  }
+  window.addEventListener("hashchange", openRefsIfNeeded);
+
+  // Ensure click-to-citation opens bibliography before scrolling
+  document.addEventListener("click", (e)=>{
+    const a = e.target && e.target.closest ? e.target.closest('a[href^="#ref-"], a[href="#references"]') : null;
+    if(!a) return;
+    const refsDetails = document.querySelector(".refsDetails");
+    if(refsDetails) refsDetails.open = true;
+  });
+
   // Search + filter behavior
   const chips = Array.from(document.querySelectorAll(".chip"));
   let activeFilter = "all";
-
   function setActiveChip(filter){
     activeFilter = filter;
     chips.forEach(c=>c.classList.toggle("active", c.dataset.filter===filter));
     applyFilters();
   }
   chips.forEach(c=>c.addEventListener("click", ()=>setActiveChip(c.dataset.filter)));
-
   const q = document.getElementById("q");
   q.addEventListener("input", applyFilters);
 
   function applyFilters(){
     const query = (q.value || "").trim().toLowerCase();
-    // Sections
+
     document.querySelectorAll(".section").forEach(sec=>{
       const secKey = sec.dataset.section || "all";
-      const secMatch = (activeFilter==="all") || (secKey===activeFilter) || (activeFilter==="guidance" && sec.id==="guidance");
+      const secMatch = (activeFilter==="all") || (secKey===activeFilter);
       const textMatch = !query || sec.innerText.toLowerCase().includes(query);
       sec.style.display = (secMatch && textMatch) ? "" : "none";
     });
 
-    // Table rows
     document.querySelectorAll("tbody tr").forEach(tr=>{
       const tags = (tr.getAttribute("data-tags")||"").toLowerCase();
       const rowText = tr.innerText.toLowerCase();
@@ -834,11 +757,9 @@ a:hover{text-decoration:underline}
       let inFilter = true;
       if(activeFilter==="excision") inFilter = (tags.includes("excision"));
       if(activeFilter==="observe")  inFilter = (tags.includes("observe"));
-      // If section hidden, rows don't matter visually, but keep consistent.
       tr.style.display = (inQuery && inFilter) ? "" : "none";
     });
 
-    // Accordions
     document.querySelectorAll("#guidance details").forEach(d=>{
       const tags = (d.getAttribute("data-tags")||"").toLowerCase();
       const bodyText = d.innerText.toLowerCase();
@@ -847,22 +768,8 @@ a:hover{text-decoration:underline}
     });
   }
 
-  // Jump filter if user clicks a nav item (keep chips in sync)
-  const navMap = {
-    "excision":"excision",
-    "observe":"observe",
-    "guidance":"guidance",
-    "followup":"followup",
-    "references":"refs"
-  };
-  document.querySelectorAll("nav a").forEach(a=>{
-    a.addEventListener("click", ()=>{
-      const id = (a.getAttribute("href")||"").replace("#","");
-      if(navMap[id]) setActiveChip(navMap[id]);
-    });
-  });
-
-  // Initial pass
+  // Initial
+  openRefsIfNeeded();
   applyFilters();
 </script>
 </body>
